@@ -1,0 +1,21 @@
+@import "../../scss/variables";
+.photo {
+    width: 100%;
+}
+.actions {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    position: absolute;
+    top: 555px;
+}
+.action {
+    font-size: 2rem;
+    color: white;
+    padding: 3rem;
+    background-color: $gray-theme;
+    &:hover {
+        cursor: pointer;
+        filter: brightness(85%);
+    }
+}
