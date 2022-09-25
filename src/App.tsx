@@ -1,5 +1,5 @@
 import Homepage from "./pages/Homepage/Homepage";
-import Admin from "./components/Admin/Admin";
+import Admin from "./pages/Admin/Admin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";

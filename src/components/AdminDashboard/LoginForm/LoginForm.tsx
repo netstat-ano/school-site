@@ -1,21 +1,25 @@
 import styles from "./LoginForm.module.scss";
-import Input from "../UI/Input/Input";
-import SuccessButton from "../UI/SuccessButton/SuccessButton";
+import Input from "../../UI/Input/Input";
+import SuccessButton from "../../UI/SuccessButton/SuccessButton";
+import { authenticationActions } from "../../../store/authentication";
+import { useDispatch } from "react-redux";
 import { createRef } from "react";
+import { authenticationLogin } from "../../../store/authentication";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { useAppDispatch } from "../../../hooks/use-app-dispatch";
+import { auth } from "../../../firebase";
 const LoginForm: React.FC<{}> = () => {
     const emailRef = createRef<HTMLInputElement>();
     const passwordRef = createRef<HTMLInputElement>();
+    const dispatch = useAppDispatch();
     const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        const signInStatus = await signInWithEmailAndPassword(
-            auth,
-            emailRef.current!.value,
-            passwordRef.current!.value
+        dispatch(
+            authenticationLogin({
+                email: emailRef.current!.value,
+                password: passwordRef.current!.value,
+            })
         );
-        console.log(signInStatus);
     };
     return (
         <div className={styles.form}>
