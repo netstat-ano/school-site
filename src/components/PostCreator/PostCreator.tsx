@@ -2,8 +2,10 @@ import Textarea from "../UI/Textarea/Textarea";
 import { useRef } from "react";
 import SuccessButton from "../UI/SuccessButton/SuccessButton";
 import styles from "./PostCreator.module.scss";
+import { useAppSelector } from "../../hooks/use-app-selector";
 const PostCreator: React.FC<{}> = (props) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const options = useAppSelector<string[]>((state) => state.categories);
     return (
         <div className={styles.container}>
             <section>
@@ -12,8 +14,9 @@ const PostCreator: React.FC<{}> = (props) => {
                 <div>
                     Categories:
                     <select>
-                        <option>1</option>
-                        <option>2</option>
+                        {options.map((category, index) => (
+                            <option key={index}>{category}</option>
+                        ))}
                     </select>
                 </div>
                 <div>

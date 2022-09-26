@@ -1,0 +1,11 @@
+@import "../../../scss/variables";
+.categories-list-item {
+    display: flex;
+    justify-content: space-between;
+}
+.categories-list-item-delete {
+    color: $canceled-theme;
+    &:hover {
+        cursor: pointer;
+    }
+}
