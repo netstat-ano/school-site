@@ -3,6 +3,8 @@ import Admin from "./pages/Admin/Admin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
+import PostDetail from "./components/PostDetail/PostDetail";
+import Layout from "./components/Layout/Layout";
 function App() {
     const navigate = useNavigate();
     useEffect(() => {
@@ -12,7 +14,23 @@ function App() {
         <div className="App">
             <Routes>
                 <Route path="/homepage" element={<Homepage />} />
-                <Route path="/admin" element={<Admin />} />
+
+                <Route
+                    path="/admin"
+                    element={
+                        <Layout>
+                            <Admin />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/post/:postId"
+                    element={
+                        <Layout>
+                            <PostDetail />
+                        </Layout>
+                    }
+                />
             </Routes>
         </div>
     );

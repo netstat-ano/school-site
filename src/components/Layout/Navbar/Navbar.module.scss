@@ -1,0 +1,18 @@
+@import "../../../scss/variables";
+.site {
+    color: $blue-theme;
+}
+.container {
+    background-color: $gray-theme;
+    font-size: 1.5rem;
+}
+.logo {
+    width: fit-content;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.link {
+    text-decoration: none;
+    color: black;
+}

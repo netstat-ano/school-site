@@ -12,11 +12,6 @@ const Textarea = forwardRef<HTMLTextAreaElement, { textarea?: {} }>(
                     const newState = prevState + 1;
                     return newState;
                 });
-            } else if (e.target.clientHeight === e.target.scrollHeight) {
-                setRows((prevState) => {
-                    const newState = prevState - 1;
-                    return newState;
-                });
             }
         };
         return (
