@@ -3,7 +3,7 @@ import Admin from "./pages/Admin/Admin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
-import PostDetail from "./components/PostDetail/PostDetail";
+import PostDetail from "./pages/PostDetail/PostDetail";
 import Layout from "./components/Layout/Layout";
 function App() {
     const navigate = useNavigate();

@@ -1,0 +1,23 @@
+@import "../../scss/variables";
+.container {
+    margin: auto;
+    width: 50vw;
+    font-size: 1.6rem;
+    margin-top: 1.5rem;
+}
+.headline {
+    font-weight: bold;
+}
+.content-controller {
+    display: flex;
+}
+.text {
+    margin-left: 4rem;
+}
+.title {
+    font-weight: bold;
+}
+.date {
+    font-size: 1rem;
+    color: $gray-theme;
+}

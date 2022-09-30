@@ -5,16 +5,19 @@ const Homepage: React.FC<{}> = (props) => {
     return (
         <div>
             <div>
-                <Link to="/admin">
-                    <button>Admin</button>
-                </Link>
+                <div>
+                    <Link to="/admin">
+                        <button>Admin</button>
+                    </Link>
+                </div>
+                <div className={styles.actions}>
+                    <div className={styles.action}>Create post</div>
+                    <div className={styles.action}>Photos</div>
+                    <div className={styles.action}>Recruitment</div>
+                </div>
+                <img className={styles.photo} src={photo}></img>
             </div>
-            <div className={styles.actions}>
-                <div className={styles.action}>Create post</div>
-                <div className={styles.action}>Photos</div>
-                <div className={styles.action}>Recruitment</div>
-            </div>
-            <img className={styles.photo} src={photo}></img>
+            <div></div>
         </div>
     );
 };
