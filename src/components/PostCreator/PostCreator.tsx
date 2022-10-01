@@ -11,11 +11,21 @@ import Input from "../UI/Input/Input";
 const PostCreator: React.FC<{}> = (props) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [checkboxValue, setCheckboxValue] = useState<string>("off");
     const [posts, setPosts] = useState<post[]>([]);
     const options = useAppSelector<string[]>((state) => state.categories);
     const [selectedCategory, setSelectedCategory] = useState<string>(
         options[0]
     );
+    const onCheckboxChangeHandler = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        if (checkboxValue === "off") {
+            setCheckboxValue("on");
+        } else {
+            setCheckboxValue("off");
+        }
+    };
     const onChangeCategoryHandler = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
@@ -23,6 +33,12 @@ const PostCreator: React.FC<{}> = (props) => {
     };
     const onAddPostHandler = (e: React.FormEvent) => {
         e.preventDefault();
+        let news: boolean;
+        if (checkboxValue === "off") {
+            news = false;
+        } else {
+            news = true;
+        }
         const id = String(Date.now());
         const data: post = {
             title: inputRef.current!.value,
@@ -30,11 +46,15 @@ const PostCreator: React.FC<{}> = (props) => {
             user: "admin",
             id,
             category: selectedCategory,
+            news,
         };
         const updates: { [k: string]: {} } = {};
+        if (news) {
+            updates[`/posts/news/${id}`] = data;
+        }
         updates[`/posts/${id}`] = data;
         update(ref(database), updates);
-        setPosts((prevState) => [...prevState, data]);
+        setPosts((prevState) => [data, ...prevState]);
     };
     useEffect(() => {
         const fetchPosts = async () => {
@@ -74,6 +94,15 @@ const PostCreator: React.FC<{}> = (props) => {
                                 <option key={index}>{category}</option>
                             ))}
                         </select>
+                    </div>
+                    <div>
+                        <label htmlFor="news">Add to news</label>
+                        <input
+                            onChange={onCheckboxChangeHandler}
+                            id="news"
+                            defaultValue={checkboxValue}
+                            type="checkbox"
+                        />
                     </div>
                     {<PostsList posts={posts} />}
                     <div>

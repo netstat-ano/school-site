@@ -4,6 +4,7 @@
     width: 50vw;
     font-size: 1.6rem;
     margin-top: 1.5rem;
+    flex-direction: column;
 }
 .headline {
     font-weight: bold;
@@ -20,4 +21,7 @@
 .date {
     font-size: 1rem;
     color: $gray-theme;
+}
+.addnews-controller {
+    margin-top: 1rem;
 }

@@ -1,12 +1,20 @@
-import { get, ref } from "firebase/database";
-import { useEffect, useState } from "react";
+import { get, ref, update } from "firebase/database";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import { database } from "../../firebase";
 import post from "../../models/post";
 import styles from "./PostDetail.module.scss";
 const PostDetail: React.FC<{}> = () => {
     const params = useParams();
-    const [post, setPost] = useState<post>();
+    const [post, setPost] = useState<post>({
+        title: "",
+        user: "",
+        category: "",
+        text: "",
+        id: "",
+        news: false,
+    });
+    const checkboxRef = useRef<HTMLInputElement>(null);
     let date;
     let formattedDate = "";
     if (post) {
@@ -15,7 +23,18 @@ const PostDetail: React.FC<{}> = () => {
             date.getMonth() + 1
         }.${date.getFullYear()}`;
     }
-
+    const onCheckboxChangeHandler = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const updates: { [k: string]: post | null } = {};
+        if (e.target.checked) {
+            updates[`posts/news/${post!.id}`] = post;
+            update(ref(database), updates);
+        } else {
+            updates[`posts/news/${post!.id}`] = null;
+            update(ref(database), updates);
+        }
+    };
     useEffect(() => {
         const fetchPost = async () => {
             const snapshot = await get(
@@ -24,6 +43,7 @@ const PostDetail: React.FC<{}> = () => {
             if (snapshot.exists()) {
                 const response = snapshot.val();
                 setPost(response);
+                checkboxRef.current!.checked = true;
             }
         };
         fetchPost();
@@ -42,6 +62,15 @@ const PostDetail: React.FC<{}> = () => {
                     <br></br>
                     {post?.text}
                 </div>
+            </div>
+            <div className={styles["addnews-controller"]}>
+                <label htmlFor="news">Add to news</label>
+                <input
+                    ref={checkboxRef}
+                    onInput={onCheckboxChangeHandler}
+                    id="news"
+                    type="checkbox"
+                ></input>
             </div>
         </div>
     );

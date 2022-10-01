@@ -4,5 +4,6 @@ interface post {
     text: string;
     id: string;
     category: string;
+    news: boolean;
 }
 export default post;

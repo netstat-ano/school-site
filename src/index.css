@@ -16,3 +16,9 @@ body {
 .link {
     color: black;
 }
+.center-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

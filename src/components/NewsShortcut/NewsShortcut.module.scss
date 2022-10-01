@@ -1,0 +1,18 @@
+@import "../../scss/variables";
+.container {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    // flex-basis: 0;
+    // flex: 1 1 0px;
+    font-size: 1.5rem;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.date {
+    color: $gray-theme;
+    font-size: 1.3rem;
+}
+.title {
+    font-weight: bold;
+}
