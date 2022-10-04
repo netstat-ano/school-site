@@ -1,9 +1,27 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../../hooks/use-app-selector";
-import post from "../../../models/post";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./PostsList.module.scss";
-const PostsList: React.FC<{ posts: post[] }> = (props) => {
+import { update, ref } from "firebase/database";
+import { database } from "../../../firebase";
+import { Dispatch, SetStateAction } from "react";
+import post from "../../../models/post";
+const PostsList: React.FC<{
+    posts: post[];
+    setPosts: Dispatch<SetStateAction<post[]>>;
+}> = (props) => {
     const categories = useAppSelector((state) => state.categories);
+    const onDeletePostHandler = (e: React.MouseEvent, id: string) => {
+        const updates: { [k: string]: {} | null } = {};
+        updates[`/posts/${id}`] = null;
+        updates[`/posts/news/${id}`] = null;
+        update(ref(database), updates);
+        props.setPosts((prevState) => {
+            const newState = prevState.filter((post) => post.id !== id);
+            return [...newState];
+        });
+    };
     return (
         <>
             {categories.map((category) => {
@@ -23,6 +41,18 @@ const PostsList: React.FC<{ posts: post[] }> = (props) => {
                                         >
                                             {post.title}
                                         </Link>
+                                        <span
+                                            onClick={(e) => {
+                                                onDeletePostHandler(e, post.id);
+                                            }}
+                                        >
+                                            <FontAwesomeIcon
+                                                className={
+                                                    styles["post-delete-icon"]
+                                                }
+                                                icon={faXmark}
+                                            />
+                                        </span>
                                     </div>
                                 );
                             }

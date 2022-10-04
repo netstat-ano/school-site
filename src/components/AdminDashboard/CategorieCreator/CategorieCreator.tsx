@@ -15,22 +15,24 @@ const CategorieCreator: React.FC<{}> = () => {
     };
     return (
         <div className={styles.container}>
-            <form onSubmit={onSubmitHandler}>
-                <h3>Create category</h3>
-                <div>
-                    <ul className={styles["categories"]}>
-                        <CategoriesList />
-                    </ul>
-                </div>
-                <div>
-                    <Input ref={inputRef} />
-                </div>
-                <div className={styles["button-controller"]}>
-                    <SuccessButton button={{ type: "submit" }}>
-                        Add category
-                    </SuccessButton>
-                </div>
-            </form>
+            <section>
+                <form onSubmit={onSubmitHandler}>
+                    <h3>Create category</h3>
+                    <div>
+                        <ul className={styles["categories"]}>
+                            <CategoriesList />
+                        </ul>
+                    </div>
+                    <div>
+                        <Input ref={inputRef} />
+                    </div>
+                    <div className={styles["button-controller"]}>
+                        <SuccessButton button={{ type: "submit" }}>
+                            Add category
+                        </SuccessButton>
+                    </div>
+                </form>
+            </section>
         </div>
     );
 };

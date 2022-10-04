@@ -1,13 +1,13 @@
-import Textarea from "../UI/Textarea/Textarea";
+import Textarea from "../../UI/Textarea/Textarea";
 import React, { useRef, useState, useEffect } from "react";
-import SuccessButton from "../UI/SuccessButton/SuccessButton";
+import SuccessButton from "../../UI/SuccessButton/SuccessButton";
 import styles from "./PostCreator.module.scss";
-import { useAppSelector } from "../../hooks/use-app-selector";
+import { useAppSelector } from "../../../hooks/use-app-selector";
 import { ref, update, get } from "firebase/database";
-import { database } from "../../firebase";
-import PostsList from "../AdminDashboard/PostsList/PostsList";
-import post from "../../models/post";
-import Input from "../UI/Input/Input";
+import { database } from "../../../firebase";
+import PostsList from "../PostsList/PostsList";
+import post from "../../../models/post";
+import Input from "../../UI/Input/Input";
 const PostCreator: React.FC<{}> = (props) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -104,7 +104,7 @@ const PostCreator: React.FC<{}> = (props) => {
                             type="checkbox"
                         />
                     </div>
-                    {<PostsList posts={posts} />}
+                    {<PostsList setPosts={setPosts} posts={posts} />}
                     <div>
                         <SuccessButton button={{ type: "submit" }}>
                             Add post

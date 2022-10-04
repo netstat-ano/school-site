@@ -10,10 +10,11 @@ const NewsShortcut: React.FC<{ post: post }> = (props: { post: post }) => {
         formattedDate = `${date.getDate()}.${
             date.getMonth() + 1
         }.${date.getFullYear()}`;
-        text = `${props.post?.text.slice(
-            0,
-            Math.round(props.post?.text.length / 2)
-        )}...`;
+        if (props.post?.text.length > 100) {
+            text = `${props.post?.text.slice(0, 50)}...`;
+        } else {
+            text = props.post?.text;
+        }
     }
     const onClickHandler = () => {
         navigate(`/post/${props.post?.id}`);
@@ -30,6 +31,12 @@ const NewsShortcut: React.FC<{ post: post }> = (props: { post: post }) => {
                     <span className={styles.title}>{props.post?.title}</span>
                     <br></br>
                     {text}
+                </div>
+                <div className={styles.space}></div>
+                <div>
+                    <span className={styles.category}>
+                        Category: {props.post?.category}
+                    </span>
                 </div>
             </div>
         </div>

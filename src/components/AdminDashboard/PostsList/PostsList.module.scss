@@ -1,7 +1,15 @@
+@import "../../../scss/variables";
 .category {
     margin-top: 1rem;
     font-weight: bold;
 }
 .container {
     font-size: 1.2rem;
+}
+.post-delete-icon {
+    color: $canceled-theme;
+    margin-left: 0.5rem;
+    &:hover {
+        cursor: pointer;
+    }
 }
