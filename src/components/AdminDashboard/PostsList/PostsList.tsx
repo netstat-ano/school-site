@@ -24,9 +24,9 @@ const PostsList: React.FC<{
     };
     return (
         <>
-            {categories.map((category) => {
+            {categories.map((category, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <div className={styles.category}>{category}</div>
                         {props.posts.map((post) => {
                             if (post.category === category) {

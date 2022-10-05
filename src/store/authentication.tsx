@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import userLogin from "../models/userLogin";
-import { auth } from "../firebase";
+import { auth, database } from "../firebase";
 import user from "../models/user";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { RootState } from "./index";
 import { ThunkAction } from "redux-thunk";
 import { AnyAction } from "redux";
+import { ref, get } from "firebase/database";
 const authentication = createSlice({
     name: "authentication",
-    initialState: {},
+    initialState: {} as user,
     reducers: {
         login(state, action: { payload: { user: user } }) {
             state = action.payload.user;
@@ -27,12 +28,26 @@ export const authenticationLogin = (
             user.email,
             user.password
         );
+        const snapshotData = await get(
+            ref(database, `/user/${snapshot.user.uid}`)
+        );
+        const responseData = snapshotData.val();
+        let type = "Admin";
+        let username = "Admin";
+        if (snapshotData.exists()) {
+            if (responseData.type) {
+                type = responseData.type;
+                username = responseData.displayName;
+            }
+        }
+
         dispatch(
             authenticationActions.login({
                 user: {
                     uid: snapshot.user.uid,
-                    username: snapshot.user.displayName,
+                    username,
                     email: snapshot.user.email!,
+                    type: type,
                 },
             })
         );

@@ -36,7 +36,7 @@ const UserList: React.FC<{
         <div>
             {users.map((user) => {
                 return (
-                    <div className={styles.container}>
+                    <div key={user.uid} className={styles.container}>
                         <div>{user.email}</div>
                         <div>{user.displayName}</div>
                         <div>{user.type}</div>

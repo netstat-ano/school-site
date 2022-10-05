@@ -8,9 +8,11 @@ import { database } from "../../../firebase";
 import PostsList from "../PostsList/PostsList";
 import post from "../../../models/post";
 import Input from "../../UI/Input/Input";
+import user from "../../../models/user";
 const PostCreator: React.FC<{}> = (props) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const user = useAppSelector<user>((state) => state.authentication);
     const [checkboxValue, setCheckboxValue] = useState<string>("off");
     const [posts, setPosts] = useState<post[]>([]);
     const options = useAppSelector<string[]>((state) => state.categories);
@@ -43,18 +45,22 @@ const PostCreator: React.FC<{}> = (props) => {
         const data: post = {
             title: inputRef.current!.value,
             text: textareaRef.current!.value,
-            user: "admin",
+            user: String(user.username),
             id,
             category: selectedCategory,
             news,
         };
         const updates: { [k: string]: {} } = {};
-        if (news) {
-            updates[`/posts/news/${id}`] = data;
+        if (user.type === "Admin") {
+            if (news) {
+                updates[`/posts/news/${id}`] = data;
+            }
+            updates[`/posts/${id}`] = data;
+            setPosts((prevState) => [data, ...prevState]);
+        } else {
+            updates[`/posts/acceptation/${id}`] = data;
         }
-        updates[`/posts/${id}`] = data;
         update(ref(database), updates);
-        setPosts((prevState) => [data, ...prevState]);
     };
     useEffect(() => {
         const fetchPosts = async () => {
