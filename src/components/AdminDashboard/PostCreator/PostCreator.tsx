@@ -9,12 +9,15 @@ import PostsList from "../PostsList/PostsList";
 import post from "../../../models/post";
 import Input from "../../UI/Input/Input";
 import user from "../../../models/user";
-const PostCreator: React.FC<{}> = (props) => {
+const PostCreator: React.FC<{
+    setPosts: React.Dispatch<React.SetStateAction<post[]>>;
+    posts: post[];
+}> = (props) => {
+    const { setPosts, posts } = props;
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const user = useAppSelector<user>((state) => state.authentication);
     const [checkboxValue, setCheckboxValue] = useState<string>("off");
-    const [posts, setPosts] = useState<post[]>([]);
     const options = useAppSelector<string[]>((state) => state.categories);
     const [selectedCategory, setSelectedCategory] = useState<string>(
         options[0]

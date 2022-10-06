@@ -2,7 +2,11 @@ import { ref, get } from "firebase/database";
 import { useEffect, useState } from "react";
 import { database } from "../../../firebase";
 import post from "../../../models/post";
-const Acceptation: React.FC<{}> = () => {
+import AcceptationDetail from "./AcceptationDetail/AcceptationDetail";
+const Acceptation: React.FC<{
+    setPosts: React.Dispatch<React.SetStateAction<post[]>>;
+    posts: post[];
+}> = (props) => {
     const [acceptationPosts, setAcceptationPosts] = useState<post[]>([]);
     useEffect(() => {
         const fetchAcceptationPosts = async () => {
@@ -23,6 +27,15 @@ const Acceptation: React.FC<{}> = () => {
         <div>
             <div>
                 <h3>To acceptation</h3>
+                {acceptationPosts.map((post) => (
+                    <AcceptationDetail
+                        setPosts={props.setPosts}
+                        posts={props.posts}
+                        setAcceptationPosts={setAcceptationPosts}
+                        key={post.id}
+                        post={post}
+                    />
+                ))}
             </div>
         </div>
     );

@@ -5,11 +5,31 @@ import { useAppSelector } from "../../../hooks/use-app-selector";
 import React from "react";
 import { removeCategory } from "../../../store/categories";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
-const CategoriesList: React.FC<{}> = (props) => {
+import post from "../../../models/post";
+import { ref, update } from "firebase/database";
+import { database } from "../../../firebase";
+const CategoriesList: React.FC<{
+    posts: post[];
+}> = (props) => {
     const dispatch = useAppDispatch();
     const categories = useAppSelector<string[]>((state) => state.categories);
-    const onDeleteHandler = (e: React.MouseEvent, id: number) => {
+    const onDeleteHandler = (
+        e: React.MouseEvent,
+        id: number,
+        category: string
+    ) => {
+        const deletedPosts = props.posts.filter(
+            (post) => post.category === category
+        );
+
+        const updates: { [k: string]: {} | null } = {};
+        for (const post of deletedPosts) {
+            updates[`/posts/${post.id}`] = null;
+            updates[`/posts/news/${post.id}`] = null;
+        }
+
         dispatch(removeCategory(id));
+        update(ref(database), updates);
     };
     return (
         <>
@@ -19,7 +39,9 @@ const CategoriesList: React.FC<{}> = (props) => {
                         <li>{category}</li>
                     </div>
                     <div>
-                        <span onClick={(e) => onDeleteHandler(e, index)}>
+                        <span
+                            onClick={(e) => onDeleteHandler(e, index, category)}
+                        >
                             <FontAwesomeIcon
                                 className={
                                     styles["categories-list-item-delete"]

@@ -4,9 +4,9 @@ import SuccessButton from "../../UI/SuccessButton/SuccessButton";
 import { addCategorie } from "../../../store/categories";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
 import React, { useRef } from "react";
-import { useAppSelector } from "../../../hooks/use-app-selector";
+import post from "../../../models/post";
 import CategoriesList from "../CategoriesList/CategoriesList";
-const CategorieCreator: React.FC<{}> = () => {
+const CategorieCreator: React.FC<{ posts: post[] }> = (props) => {
     const dispatch = useAppDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
     const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +20,7 @@ const CategorieCreator: React.FC<{}> = () => {
                     <h3>Create category</h3>
                     <div>
                         <ul className={styles["categories"]}>
-                            <CategoriesList />
+                            <CategoriesList posts={props.posts} />
                         </ul>
                     </div>
                     <div>
