@@ -15,6 +15,7 @@ const PostDetail: React.FC<{}> = () => {
         text: "",
         id: "",
         news: false,
+        userID: "",
     });
     const checkboxRef = useRef<HTMLInputElement>(null);
     let date;
@@ -46,9 +47,22 @@ const PostDetail: React.FC<{}> = () => {
                 ref(database, `/posts/${params.postId}`)
             );
             if (snapshot.exists()) {
-                const response = snapshot.val();
+                const response: post = snapshot.val();
                 setPost(response);
-                checkboxRef.current!.checked = true;
+                if (response.news) {
+                    checkboxRef.current!.checked = true;
+                }
+            } else {
+                const snapshot = await get(
+                    ref(database, `/posts/acceptation/${params.postId}`)
+                );
+                if (snapshot.exists()) {
+                    const response: post = snapshot.val();
+                    setPost(response);
+                    if (response.news) {
+                        checkboxRef.current!.checked = true;
+                    }
+                }
             }
         };
         fetchPost();

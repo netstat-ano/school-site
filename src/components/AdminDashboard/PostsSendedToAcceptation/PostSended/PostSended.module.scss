@@ -1,0 +1,13 @@
+@import "../../../../scss/variables";
+.icon {
+    color: $canceled-theme;
+}
+.link {
+    color: black;
+    text-decoration: none;
+}
+.container {
+    width: 20vw;
+    display: flex;
+    justify-content: space-between;
+}

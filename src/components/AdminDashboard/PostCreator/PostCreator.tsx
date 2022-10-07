@@ -9,11 +9,16 @@ import PostsList from "../PostsList/PostsList";
 import post from "../../../models/post";
 import Input from "../../UI/Input/Input";
 import user from "../../../models/user";
+import PostsSendedToAcceptation from "../PostsSendedToAcceptation/PostsSendedToAcceptation";
+import SuccessNotification from "../../UI/SuccessNotification/SuccessNotification";
 const PostCreator: React.FC<{
+    acceptationPosts: post[];
+    setAcceptationPosts: React.Dispatch<React.SetStateAction<post[]>>;
     setPosts: React.Dispatch<React.SetStateAction<post[]>>;
     posts: post[];
 }> = (props) => {
-    const { setPosts, posts } = props;
+    const { setPosts, posts, setAcceptationPosts, acceptationPosts } = props;
+    const [notification, setNotification] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const user = useAppSelector<user>((state) => state.authentication);
@@ -52,6 +57,7 @@ const PostCreator: React.FC<{
             id,
             category: selectedCategory,
             news,
+            userID: String(user.uid),
         };
         const updates: { [k: string]: {} } = {};
         if (user.type === "Admin") {
@@ -62,6 +68,13 @@ const PostCreator: React.FC<{
             setPosts((prevState) => [data, ...prevState]);
         } else {
             updates[`/posts/acceptation/${id}`] = data;
+            inputRef.current!.value = "";
+            textareaRef.current!.value = "";
+            setNotification("Query was sended");
+            setTimeout(() => {
+                setNotification("");
+            }, 1500);
+            setAcceptationPosts((prevState) => [data, ...prevState]);
         }
         update(ref(database), updates);
     };
@@ -82,6 +95,11 @@ const PostCreator: React.FC<{
             <section>
                 <form onSubmit={onAddPostHandler}>
                     <h3>Create a post</h3>
+                    {notification && (
+                        <SuccessNotification>
+                            {notification}
+                        </SuccessNotification>
+                    )}
                     <div className={styles["input-controller"]}>
                         <Input
                             input={{ type: "text", placeholder: "Title" }}
@@ -120,6 +138,14 @@ const PostCreator: React.FC<{
                         </SuccessButton>
                     </div>
                 </form>
+                {user.type === "Editor" && (
+                    <div>
+                        <PostsSendedToAcceptation
+                            setAcceptationPosts={setAcceptationPosts}
+                            acceptationPosts={acceptationPosts}
+                        />
+                    </div>
+                )}
             </section>
         </div>
     );
