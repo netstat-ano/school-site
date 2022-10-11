@@ -1,0 +1,11 @@
+@import "../../scss/variables";
+.nav {
+    &:hover {
+        cursor: pointer;
+    }
+}
+.container {
+    background-color: $gray-theme;
+    width: 100vw;
+    font-size: 1.6rem;
+}

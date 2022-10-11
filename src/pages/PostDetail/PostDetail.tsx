@@ -5,6 +5,7 @@ import { database } from "../../firebase";
 import { useAppSelector } from "../../hooks/use-app-selector";
 import post from "../../models/post";
 import styles from "./PostDetail.module.scss";
+import DeletePost from "../../components/AdminDashboard/DeletePost/DeletePost";
 const PostDetail: React.FC<{}> = () => {
     const params = useParams();
     const user = useAppSelector((state) => state.authentication);
@@ -20,14 +21,13 @@ const PostDetail: React.FC<{}> = () => {
     const checkboxRef = useRef<HTMLInputElement>(null);
     let date;
     let formattedDate = "";
-    let addToNews = false;
+    let admin = false;
     if (post) {
         date = new Date(Number(post.id));
         formattedDate = `${date.getDate()}.${
             date.getMonth() + 1
         }.${date.getFullYear()}`;
-        addToNews =
-            user.uid === post.id || user.type === "Admin" ? true : false;
+        admin = user.uid === post.id || user.type === "Admin" ? true : false;
     }
     const onCheckboxChangeHandler = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -82,7 +82,7 @@ const PostDetail: React.FC<{}> = () => {
                     {post?.text}
                 </div>
             </div>
-            {addToNews && (
+            {admin && (
                 <div className={styles["addnews-controller"]}>
                     <label htmlFor="news">Add to news</label>
                     <input
@@ -93,6 +93,7 @@ const PostDetail: React.FC<{}> = () => {
                     ></input>
                 </div>
             )}
+            {admin && <DeletePost id={post.id} />}
         </div>
     );
 };

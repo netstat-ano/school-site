@@ -1,7 +1,6 @@
 import styles from "./LoginForm.module.scss";
 import Input from "../../UI/Input/Input";
 import SuccessButton from "../../UI/SuccessButton/SuccessButton";
-import { fetchCategories } from "../../../store/categories";
 import { createRef } from "react";
 import { authenticationLogin } from "../../../store/authentication";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
@@ -17,7 +16,6 @@ const LoginForm: React.FC<{}> = () => {
                 password: passwordRef.current!.value,
             })
         );
-        dispatch(fetchCategories());
     };
     return (
         <div className={styles.form}>

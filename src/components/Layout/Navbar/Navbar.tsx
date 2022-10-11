@@ -1,5 +1,6 @@
 import styles from "./Navbar.module.scss";
 import { Link } from "react-router-dom";
+import NavElements from "../../NavElements/NavElements";
 const Navbar: React.FC<{}> = () => {
     return (
         <div className={styles.container}>
@@ -8,6 +9,8 @@ const Navbar: React.FC<{}> = () => {
                     <span>School</span>
                     <span className={styles.site}>site</span>
                 </Link>
+                <div className={styles.nav}></div>
+                <NavElements />
             </div>
         </div>
     );
