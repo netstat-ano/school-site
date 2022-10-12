@@ -34,9 +34,11 @@ const PostDetail: React.FC<{}> = () => {
     ) => {
         const updates: { [k: string]: post | null } = {};
         if (e.target.checked) {
-            updates[`posts/news/${post!.id}`] = post;
+            updates[`posts/${post!.id}`] = { ...post, news: true };
+            updates[`posts/news/${post!.id}`] = { ...post, news: true };
             update(ref(database), updates);
         } else {
+            updates[`posts/${post!.id}`] = { ...post, news: false };
             updates[`posts/news/${post!.id}`] = null;
             update(ref(database), updates);
         }
