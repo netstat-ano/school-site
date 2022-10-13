@@ -6,5 +6,6 @@ interface post {
     category: string;
     news: boolean;
     userID: string;
+    amountOfPhotos?: number;
 }
 export default post;

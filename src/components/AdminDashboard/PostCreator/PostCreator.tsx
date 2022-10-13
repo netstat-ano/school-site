@@ -11,6 +11,12 @@ import Input from "../../UI/Input/Input";
 import user from "../../../models/user";
 import PostsSendedToAcceptation from "../PostsSendedToAcceptation/PostsSendedToAcceptation";
 import SuccessNotification from "../../UI/SuccessNotification/SuccessNotification";
+import AttachPhotos from "../AttachPhotos/AttachPhotos";
+import { storage } from "../../../firebase";
+import { uploadBytes, ref as sRef } from "firebase/storage";
+import Button from "../../UI/Button/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 const PostCreator: React.FC<{
     acceptationPosts: post[];
     setAcceptationPosts: React.Dispatch<React.SetStateAction<post[]>>;
@@ -27,6 +33,7 @@ const PostCreator: React.FC<{
     const [selectedCategory, setSelectedCategory] = useState<string>(
         options[0]
     );
+    const attachPhotosRef = useRef<HTMLInputElement>(null);
     const onCheckboxChangeHandler = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -41,7 +48,7 @@ const PostCreator: React.FC<{
     ) => {
         setSelectedCategory(e.target.value);
     };
-    const onAddPostHandler = (e: React.FormEvent) => {
+    const onAddPostHandler = async (e: React.FormEvent) => {
         e.preventDefault();
         let news: boolean;
         if (checkboxValue === "off") {
@@ -58,6 +65,7 @@ const PostCreator: React.FC<{
             category: selectedCategory,
             news,
             userID: String(user.uid),
+            amountOfPhotos: attachPhotosRef.current?.files?.length,
         };
         const updates: { [k: string]: {} } = {};
         if (user.type === "Admin") {
@@ -77,6 +85,19 @@ const PostCreator: React.FC<{
             setAcceptationPosts((prevState) => [data, ...prevState]);
         }
         update(ref(database), updates);
+        if (attachPhotosRef.current?.files) {
+            const files = attachPhotosRef.current?.files;
+
+            for (const index in files) {
+                if (index !== "item" && index !== "length") {
+                    await uploadBytes(
+                        sRef(storage, `${id}/${index}`),
+                        files[index]
+                    );
+                }
+            }
+            attachPhotosRef.current!.value = "";
+        }
     };
     useEffect(() => {
         const fetchPosts = async () => {
@@ -131,6 +152,25 @@ const PostCreator: React.FC<{
                             type="checkbox"
                         />
                     </div>
+                    <AttachPhotos
+                        accept="image/png, image/jpeg"
+                        ref={attachPhotosRef}
+                        multiple={true}
+                        name="photos"
+                    >
+                        <Button
+                            className={styles["upload-button"]}
+                            button={{ type: "button" }}
+                        >
+                            <>
+                                Attach a photo
+                                <FontAwesomeIcon
+                                    className={styles["upload-icon"]}
+                                    icon={faUpload}
+                                />
+                            </>
+                        </Button>
+                    </AttachPhotos>
                     {<PostsList setPosts={setPosts} posts={posts} />}
                     <div>
                         <SuccessButton button={{ type: "submit" }}>

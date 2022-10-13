@@ -6,9 +6,13 @@ import { useAppSelector } from "../../hooks/use-app-selector";
 import post from "../../models/post";
 import styles from "./PostDetail.module.scss";
 import DeletePost from "../../components/AdminDashboard/DeletePost/DeletePost";
+import { ref as sRef, getDownloadURL } from "firebase/storage";
+import { storage } from "../../firebase";
+import Photos from "../../components/Photos/Photos";
 const PostDetail: React.FC<{}> = () => {
     const params = useParams();
     const user = useAppSelector((state) => state.authentication);
+    const [photos, setPhotos] = useState<string[]>([]);
     const [post, setPost] = useState<post>({
         title: "",
         user: "",
@@ -45,11 +49,12 @@ const PostDetail: React.FC<{}> = () => {
     };
     useEffect(() => {
         const fetchPost = async () => {
+            let response: post;
             const snapshot = await get(
                 ref(database, `/posts/${params.postId}`)
             );
             if (snapshot.exists()) {
-                const response: post = snapshot.val();
+                response = snapshot.val();
                 setPost(response);
                 if (response.news) {
                     checkboxRef.current!.checked = true;
@@ -59,11 +64,20 @@ const PostDetail: React.FC<{}> = () => {
                     ref(database, `/posts/acceptation/${params.postId}`)
                 );
                 if (snapshot.exists()) {
-                    const response: post = snapshot.val();
+                    response = snapshot.val();
                     setPost(response);
                     if (response.news) {
                         checkboxRef.current!.checked = true;
                     }
+                }
+            }
+
+            if (response!.amountOfPhotos && response!.amountOfPhotos > 0) {
+                for (let i = 0; i < response!.amountOfPhotos; i++) {
+                    const url = await getDownloadURL(
+                        sRef(storage, `/${params.postId}/${i}`)
+                    );
+                    setPhotos((prevState) => [url, ...prevState]);
                 }
             }
         };
@@ -83,6 +97,14 @@ const PostDetail: React.FC<{}> = () => {
                     <br></br>
                     {post?.text}
                 </div>
+            </div>
+            <div>
+                <Photos
+                    admin={admin}
+                    id={post.id}
+                    setPhotos={setPhotos}
+                    photos={photos}
+                />
             </div>
             {admin && (
                 <div className={styles["addnews-controller"]}>

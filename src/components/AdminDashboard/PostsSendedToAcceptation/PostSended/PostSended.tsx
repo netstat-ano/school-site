@@ -15,17 +15,15 @@ const PostSended: React.FC<{
         const updates: { [k: string]: {} | null } = {};
         updates[`posts/acceptation/${post.id}`] = null;
         await update(ref(database), updates);
+        const id = post.id;
         setAcceptationPosts((prevState) =>
-            prevState.filter((post) => post.id !== post.id)
+            prevState.filter((post) => post.id !== id)
         );
     };
     return (
         <div className={styles.container}>
             <div>
-                <Link
-                    className={styles.link}
-                    to={`posts/acceptation/${post.id}`}
-                >
+                <Link className={styles.link} to={`/post/${post.id}`}>
                     {post.title}
                 </Link>
             </div>

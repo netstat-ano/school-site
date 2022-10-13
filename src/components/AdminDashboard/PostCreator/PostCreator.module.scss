@@ -25,3 +25,12 @@
         }
     }
 }
+.upload-icon {
+    margin-left: 0.5rem;
+}
+.upload-button {
+    pointer-events: none;
+    &:hover {
+        cursor: pointer;
+    }
+}

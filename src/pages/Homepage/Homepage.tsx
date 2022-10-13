@@ -22,11 +22,6 @@ const Homepage: React.FC<{}> = (props) => {
                 </div> */}
                     <img className={styles.photo} src={photo}></img>
                 </div>
-                <div>
-                    <Link to="/admin">
-                        <button>Admin</button>
-                    </Link>
-                </div>
                 <News />
             </Layout>
         </div>
