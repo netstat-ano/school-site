@@ -12,6 +12,7 @@ const CategorieCreator: React.FC<{ posts: post[] }> = (props) => {
     const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(addCategorie(inputRef.current!.value));
+        inputRef.current!.value = "";
     };
     return (
         <div className={styles.container}>

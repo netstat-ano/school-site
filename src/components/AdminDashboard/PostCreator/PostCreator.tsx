@@ -75,17 +75,22 @@ const PostCreator: React.FC<{
             setPosts((prevState) => [data, ...prevState]);
         } else {
             updates[`/posts/acceptation/${id}`] = data;
-            inputRef.current!.value = "";
-            textareaRef.current!.value = "";
             setNotification("Query was sended");
             setTimeout(() => {
                 setNotification("");
             }, 1500);
             setAcceptationPosts((prevState) => [data, ...prevState]);
         }
+        inputRef.current!.value = "";
+        textareaRef.current!.value = "";
         await update(ref(database), updates);
         await uploadPhotos(attachPhotosRef, id);
     };
+    useEffect(() => {
+        if (!selectedCategory || options.length === 1) {
+            setSelectedCategory(options[0]);
+        }
+    }, [options[0]]);
     useEffect(() => {
         const fetchPosts = async () => {
             const snapshot = await get(ref(database, `/posts/`));
