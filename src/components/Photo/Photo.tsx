@@ -19,7 +19,7 @@ const Photo: React.FC<{
         await deleteObject(photoRef);
     };
     return (
-        <>
+        <div className={styles.container}>
             <img className={styles.img} src={props.photoURL}></img>
             {props.admin && (
                 <CanceledButton
@@ -30,7 +30,7 @@ const Photo: React.FC<{
                     Delete photo
                 </CanceledButton>
             )}
-        </>
+        </div>
     );
 };
 export default Photo;

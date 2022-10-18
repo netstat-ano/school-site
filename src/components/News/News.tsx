@@ -21,7 +21,7 @@ const News: React.FC<{}> = () => {
     return (
         <div className={styles["news-container"]}>
             {newsPosts.map((post) => (
-                <NewsShortcut post={post} />
+                <NewsShortcut key={post.id} post={post} />
             ))}
         </div>
     );

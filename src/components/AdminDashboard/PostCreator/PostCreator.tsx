@@ -12,8 +12,7 @@ import user from "../../../models/user";
 import PostsSendedToAcceptation from "../PostsSendedToAcceptation/PostsSendedToAcceptation";
 import SuccessNotification from "../../UI/SuccessNotification/SuccessNotification";
 import AttachPhotos from "../AttachPhotos/AttachPhotos";
-import { storage } from "../../../firebase";
-import { uploadBytes, ref as sRef } from "firebase/storage";
+import uploadPhotos from "../../../helpers/uploadPhotos";
 import Button from "../../UI/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
@@ -84,20 +83,8 @@ const PostCreator: React.FC<{
             }, 1500);
             setAcceptationPosts((prevState) => [data, ...prevState]);
         }
-        update(ref(database), updates);
-        if (attachPhotosRef.current?.files) {
-            const files = attachPhotosRef.current?.files;
-
-            for (const index in files) {
-                if (index !== "item" && index !== "length") {
-                    await uploadBytes(
-                        sRef(storage, `${id}/${index}`),
-                        files[index]
-                    );
-                }
-            }
-            attachPhotosRef.current!.value = "";
-        }
+        await update(ref(database), updates);
+        await uploadPhotos(attachPhotosRef, id);
     };
     useEffect(() => {
         const fetchPosts = async () => {
@@ -152,6 +139,7 @@ const PostCreator: React.FC<{
                             type="checkbox"
                         />
                     </div>
+
                     <AttachPhotos
                         accept="image/png, image/jpeg"
                         ref={attachPhotosRef}
@@ -171,6 +159,7 @@ const PostCreator: React.FC<{
                             </>
                         </Button>
                     </AttachPhotos>
+
                     {<PostsList setPosts={setPosts} posts={posts} />}
                     <div>
                         <SuccessButton button={{ type: "submit" }}>

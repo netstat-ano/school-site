@@ -10,7 +10,7 @@ const NavElements: React.FC<{}> = () => {
     const [isShown, setIsShown] = useState<string>("");
     const categories = useAppSelector((state) => state.categories);
     const onMouseOverHandler = (
-        e: React.MouseEvent<HTMLSpanElement>,
+        e: React.MouseEvent<HTMLDivElement>,
         category: string
     ) => {
         setIsShown(category);
@@ -25,10 +25,12 @@ const NavElements: React.FC<{}> = () => {
                 if (snapshotPosts.exists()) {
                     const responsePosts = snapshotPosts.val();
                     for (const id in responsePosts) {
-                        setPosts((prevState) => [
-                            responsePosts[id],
-                            ...prevState,
-                        ]);
+                        if (id !== "news") {
+                            setPosts((prevState) => [
+                                responsePosts[id],
+                                ...prevState,
+                            ]);
+                        }
                     }
                 }
             }
@@ -36,10 +38,10 @@ const NavElements: React.FC<{}> = () => {
         fetchData();
     }, []);
     return (
-        <>
+        <div className={styles.container}>
             {categories.map((category) => (
-                <div className={styles.container}>
-                    <span
+                <div key={category} className={styles["nav-controller"]}>
+                    <div
                         className={styles.nav}
                         onMouseOver={(e) => {
                             onMouseOverHandler(e, category);
@@ -49,15 +51,16 @@ const NavElements: React.FC<{}> = () => {
                         {category}
                         {posts.map((post) => (
                             <NavElement
+                                key={post.id}
                                 isShown={isShown}
                                 category={category}
                                 post={post}
                             />
                         ))}
-                    </span>
+                    </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 };
 export default NavElements;

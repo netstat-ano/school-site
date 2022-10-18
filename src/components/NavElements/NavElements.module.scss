@@ -4,9 +4,11 @@
         cursor: pointer;
     }
 }
-.container {
+.nav-controller {
     background-color: $gray-theme;
-    width: 100vw;
     font-size: 1.6rem;
-    position: absolute;
+    padding-right: 0.5rem;
+}
+.container {
+    display: flex;
 }

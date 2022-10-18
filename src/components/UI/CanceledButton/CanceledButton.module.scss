@@ -3,4 +3,7 @@
     background-color: $canceled-theme;
     border: 1px solid black;
     color: white;
+    &:hover {
+        cursor: pointer;
+    }
 }

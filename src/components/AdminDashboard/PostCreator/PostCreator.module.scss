@@ -30,7 +30,14 @@
 }
 .upload-button {
     pointer-events: none;
+
     &:hover {
         cursor: pointer;
     }
+}
+.attachPhotos-controller {
+    display: flex;
+}
+.files-amount {
+    margin-left: 0.5rem;
 }

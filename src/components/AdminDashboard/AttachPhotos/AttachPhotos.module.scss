@@ -1,3 +1,8 @@
+@import "../../../scss/variables";
 .input {
     display: none;
+}
+.not-empty {
+    border: 3px solid $success-theme;
+    background-color: $blue-theme;
 }

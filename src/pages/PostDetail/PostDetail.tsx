@@ -5,12 +5,16 @@ import { database } from "../../firebase";
 import { useAppSelector } from "../../hooks/use-app-selector";
 import post from "../../models/post";
 import styles from "./PostDetail.module.scss";
+import updatePhotos from "../../helpers/uploadPhotos";
 import DeletePost from "../../components/AdminDashboard/DeletePost/DeletePost";
 import { ref as sRef, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import Photos from "../../components/Photos/Photos";
+import AttachPhotos from "../../components/AdminDashboard/AttachPhotos/AttachPhotos";
+import Button from "../../components/UI/Button/Button";
 const PostDetail: React.FC<{}> = () => {
     const params = useParams();
+    const attachPhotosRef = useRef<HTMLInputElement>(null);
     const user = useAppSelector((state) => state.authentication);
     const [photos, setPhotos] = useState<string[]>([]);
     const [post, setPost] = useState<post>({
@@ -45,6 +49,20 @@ const PostDetail: React.FC<{}> = () => {
             updates[`posts/${post!.id}`] = { ...post, news: false };
             updates[`posts/news/${post!.id}`] = null;
             update(ref(database), updates);
+        }
+    };
+    const onAttachPhotosHandler = async () => {
+        if (attachPhotosRef.current!.files!.length > 0) {
+            updatePhotos(attachPhotosRef, post.id);
+            const files = attachPhotosRef.current!.files!;
+            for (const index in files) {
+                const fileReader = new FileReader();
+                if (index !== "length" && index !== "item") {
+                    const result = fileReader.readAsDataURL(files[index]);
+
+                    setPhotos((prevState) => [String(result), ...prevState]);
+                }
+            }
         }
     };
     useEffect(() => {
@@ -118,6 +136,22 @@ const PostDetail: React.FC<{}> = () => {
                 </div>
             )}
             {admin && <DeletePost id={post.id} />}
+            {admin && (
+                <AttachPhotos
+                    input={{ onChange: onAttachPhotosHandler }}
+                    ref={attachPhotosRef}
+                    name="attachPhotos"
+                    multiple={true}
+                    accept="image/png, image/jpeg"
+                >
+                    <Button
+                        className={styles["attach-button"]}
+                        button={{ type: "button" }}
+                    >
+                        Attach photos
+                    </Button>
+                </AttachPhotos>
+            )}
         </div>
     );
 };
