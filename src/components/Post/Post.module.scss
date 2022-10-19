@@ -1,0 +1,23 @@
+@import "../../scss/variables";
+.headline {
+    font-weight: bold;
+}
+.content-controller {
+    display: flex;
+}
+.text {
+    margin-left: 4rem;
+}
+.title {
+    font-weight: bold;
+}
+.date {
+    font-size: 1rem;
+    color: $gray-theme;
+}
+.addnews-controller {
+    margin-top: 1rem;
+}
+.attach-button {
+    pointer-events: none;
+}

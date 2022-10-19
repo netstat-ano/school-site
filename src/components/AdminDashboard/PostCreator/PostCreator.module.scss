@@ -12,19 +12,7 @@
         width: 50%;
     }
 }
-.input-controller {
-    margin-bottom: 1rem;
-    input {
-        font-size: 1.6rem;
-    }
-}
-@media screen and(max-width: 460px) {
-    .input-controller {
-        input {
-            font-size: 1.4rem;
-        }
-    }
-}
+
 .upload-icon {
     margin-left: 0.5rem;
 }

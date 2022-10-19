@@ -13,7 +13,7 @@ const Photos: React.FC<{
     return (
         <div className={styles.container}>
             {props.photos.map((photoURL, index) => (
-                <div className={styles["img-controller"]}>
+                <div key={index} className={styles["img-controller"]}>
                     <Photo
                         id={props.id}
                         admin={props.admin}

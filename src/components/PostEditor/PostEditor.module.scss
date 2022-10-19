@@ -1,0 +1,28 @@
+.input-controller {
+    margin-bottom: 1rem;
+    input {
+        font-size: 1.6rem;
+    }
+}
+@media screen and(max-width: 460px) {
+    .input-controller {
+        input {
+            font-size: 1.4rem;
+        }
+    }
+}
+.container {
+    textarea {
+        width: 100%;
+        font-size: 1.6rem;
+    }
+    input {
+        width: 50%;
+    }
+    button {
+        font-size: 1.6rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

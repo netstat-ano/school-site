@@ -115,7 +115,10 @@ const PostCreator: React.FC<{
                     )}
                     <div className={styles["input-controller"]}>
                         <Input
-                            input={{ type: "text", placeholder: "Title" }}
+                            input={{
+                                type: "text",
+                                placeholder: "Title",
+                            }}
                             ref={inputRef}
                         />
                     </div>
@@ -123,6 +126,7 @@ const PostCreator: React.FC<{
                         textarea={{ placeholder: "Message" }}
                         ref={textareaRef}
                     />
+
                     <div>
                         Categories:
                         <select
@@ -135,6 +139,7 @@ const PostCreator: React.FC<{
                             ))}
                         </select>
                     </div>
+
                     <div>
                         <label htmlFor="news">Add to news</label>
                         <input
