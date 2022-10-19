@@ -1,4 +1,3 @@
-import Textarea from "../../UI/Textarea/Textarea";
 import React, { useRef, useState, useEffect } from "react";
 import SuccessButton from "../../UI/SuccessButton/SuccessButton";
 import styles from "./PostCreator.module.scss";
@@ -7,7 +6,6 @@ import { ref, update, get } from "firebase/database";
 import { database } from "../../../firebase";
 import PostsList from "../PostsList/PostsList";
 import post from "../../../models/post";
-import Input from "../../UI/Input/Input";
 import user from "../../../models/user";
 import PostsSendedToAcceptation from "../PostsSendedToAcceptation/PostsSendedToAcceptation";
 import SuccessNotification from "../../UI/SuccessNotification/SuccessNotification";
@@ -16,6 +14,8 @@ import uploadPhotos from "../../../helpers/uploadPhotos";
 import Button from "../../UI/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import updatePost from "../../../helpers/updatePost";
+import PostEditor from "../../PostEditor/PostEditor";
 const PostCreator: React.FC<{
     acceptationPosts: post[];
     setAcceptationPosts: React.Dispatch<React.SetStateAction<post[]>>;
@@ -24,8 +24,8 @@ const PostCreator: React.FC<{
 }> = (props) => {
     const { setPosts, posts, setAcceptationPosts, acceptationPosts } = props;
     const [notification, setNotification] = useState("");
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const [textValue, setTextValue] = useState<string>("");
+    const [titleValue, setTitleValue] = useState<string>("");
     const user = useAppSelector<user>((state) => state.authentication);
     const [checkboxValue, setCheckboxValue] = useState<string>("off");
     const options = useAppSelector<string[]>((state) => state.categories);
@@ -42,6 +42,7 @@ const PostCreator: React.FC<{
             setCheckboxValue("off");
         }
     };
+
     const onChangeCategoryHandler = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
@@ -57,8 +58,8 @@ const PostCreator: React.FC<{
         }
         const id = String(Date.now());
         const data: post = {
-            title: inputRef.current!.value,
-            text: textareaRef.current!.value,
+            title: titleValue,
+            text: textValue,
             user: String(user.username),
             id,
             category: selectedCategory,
@@ -66,24 +67,19 @@ const PostCreator: React.FC<{
             userID: String(user.uid),
             amountOfPhotos: attachPhotosRef.current?.files?.length,
         };
-        const updates: { [k: string]: {} } = {};
         if (user.type === "Admin") {
-            if (news) {
-                updates[`/posts/news/${id}`] = data;
-            }
-            updates[`/posts/${id}`] = data;
+            await updatePost(data, {});
             setPosts((prevState) => [data, ...prevState]);
         } else {
-            updates[`/posts/acceptation/${id}`] = data;
+            await updatePost(data, { acceptation: true });
             setNotification("Query was sended");
             setTimeout(() => {
                 setNotification("");
             }, 1500);
             setAcceptationPosts((prevState) => [data, ...prevState]);
         }
-        inputRef.current!.value = "";
-        textareaRef.current!.value = "";
-        await update(ref(database), updates);
+        setTitleValue("");
+        setTextValue("");
         await uploadPhotos(attachPhotosRef, id);
     };
     useEffect(() => {
@@ -113,18 +109,11 @@ const PostCreator: React.FC<{
                             {notification}
                         </SuccessNotification>
                     )}
-                    <div className={styles["input-controller"]}>
-                        <Input
-                            input={{
-                                type: "text",
-                                placeholder: "Title",
-                            }}
-                            ref={inputRef}
-                        />
-                    </div>
-                    <Textarea
-                        textarea={{ placeholder: "Message" }}
-                        ref={textareaRef}
+                    <PostEditor
+                        setTextValue={setTextValue}
+                        setTitleValue={setTitleValue}
+                        text=""
+                        title=""
                     />
 
                     <div>

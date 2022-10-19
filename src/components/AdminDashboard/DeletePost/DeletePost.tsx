@@ -3,15 +3,14 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./DeletePost.module.scss";
 import { useNavigate } from "react-router";
 import { ref, update } from "firebase/database";
+import updatePost from "../../../helpers/updatePost";
+import post from "../../../models/post";
 import { database } from "../../../firebase";
-const DeletePost: React.FC<{ id: string }> = (props) => {
+const DeletePost: React.FC<{ post: post }> = (props) => {
     const navigate = useNavigate();
     const onDeletePost = () => {
-        const updates: { [k: string]: {} | null } = {};
-        updates[`posts/${props.id}`] = null;
-        updates[`/posts/news/${props.id}`] = null;
+        updatePost(props.post, { delete: true });
         navigate("/homepage");
-        update(ref(database), updates);
     };
     return (
         <FontAwesomeIcon

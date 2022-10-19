@@ -111,7 +111,7 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
                     Edit post
                 </SuccessButton>
             )}
-            {admin && <DeletePost id={post.id} />}
+            {admin && <DeletePost post={post} />}
             {admin && (
                 <AttachPhotos
                     input={{ onChange: onAttachPhotosHandler }}

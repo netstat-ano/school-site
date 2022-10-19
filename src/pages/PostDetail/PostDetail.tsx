@@ -7,6 +7,7 @@ import styles from "./PostDetail.module.scss";
 import Post from "../../components/Post/Post";
 import PostEditor from "../../components/PostEditor/PostEditor";
 import updatePost from "../../helpers/updatePost";
+import SuccessButton from "../../components/UI/SuccessButton/SuccessButton";
 const PostDetail: React.FC<{}> = () => {
     const params = useParams();
     const [post, setPost] = useState<post>({
@@ -24,8 +25,11 @@ const PostDetail: React.FC<{}> = () => {
     const onEditHandler = () => {
         setEditMode(true);
     };
-    const onUpdateHandler = () => {
-        updatePost({ ...post, title: titleValue, text: textValue });
+    const onUpdateHandler = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        updatePost({ ...post, title: titleValue, text: textValue }, {});
+        setPost({ ...post, title: titleValue, text: textValue });
+        setEditMode(false);
     };
     useEffect(() => {
         const fetchPost = async () => {
@@ -47,19 +51,23 @@ const PostDetail: React.FC<{}> = () => {
             }
         };
         fetchPost();
-    }, []);
+    }, [params.postId]);
 
     return (
         <div className={`center ${styles.container}`}>
             {!editMode && <Post onEditHandler={onEditHandler} post={post} />}
             {editMode && (
-                <PostEditor
-                    setTextValue={setTextValue}
-                    setTitleValue={setTitleValue}
-                    onSaveHandler={onUpdateHandler}
-                    text={post.text}
-                    title={post.title}
-                />
+                <form onSubmit={onUpdateHandler}>
+                    <PostEditor
+                        setTextValue={setTextValue}
+                        setTitleValue={setTitleValue}
+                        text={post.text}
+                        title={post.title}
+                    />
+                    <SuccessButton button={{ type: "submit" }}>
+                        Save
+                    </SuccessButton>
+                </form>
             )}
         </div>
     );

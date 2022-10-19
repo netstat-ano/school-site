@@ -1,5 +1,4 @@
 import Input from "../UI/Input/Input";
-import SuccessButton from "../UI/SuccessButton/SuccessButton";
 import Textarea from "../UI/Textarea/Textarea";
 import styles from "./PostEditor.module.scss";
 const PostEditor: React.FC<{
@@ -8,11 +7,9 @@ const PostEditor: React.FC<{
     acceptation?: boolean;
     text: string;
     title: string;
-    onSaveHandler: () => void;
 }> = (props) => {
     const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        props.onSaveHandler();
     };
     const onTitleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
@@ -24,32 +21,25 @@ const PostEditor: React.FC<{
     };
     return (
         <div className={styles.container}>
-            <form onSubmit={onSubmitHandler}>
-                <div className={styles["input-controller"]}>
-                    <Input
-                        input={{
-                            onChange: onTitleChangeHandler,
-                            type: "text",
-                            placeholder: "Title",
-                            defaultValue: props.title,
-                        }}
-                    />
-                </div>
-                <div>
-                    <Textarea
-                        textarea={{
-                            onChange: onTextChangeHandler,
-                            placeholder: "Message",
-                            defaultValue: props.text,
-                        }}
-                    />
-                </div>
-                <div>
-                    <SuccessButton button={{ type: "submit" }}>
-                        Save
-                    </SuccessButton>
-                </div>
-            </form>
+            <div className={styles["input-controller"]}>
+                <Input
+                    input={{
+                        onChange: onTitleChangeHandler,
+                        type: "text",
+                        placeholder: "Title",
+                        defaultValue: props.title,
+                    }}
+                />
+            </div>
+            <div>
+                <Textarea
+                    textarea={{
+                        onChange: onTextChangeHandler,
+                        placeholder: "Message",
+                        defaultValue: props.text,
+                    }}
+                />
+            </div>
         </div>
     );
 };
