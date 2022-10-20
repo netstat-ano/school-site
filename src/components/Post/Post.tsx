@@ -28,20 +28,24 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
             date.getMonth() + 1
         }.${date.getFullYear()}`;
         admin = user.uid === post.id || user.type === "Admin" ? true : false;
-    }
-    if (post.news) {
-        checkboxRef.current!.checked = true;
+        if (checkboxRef.current && post.news) {
+            checkboxRef.current!.checked = true;
+        }
     }
     const onAttachPhotosHandler = async () => {
         if (attachPhotosRef.current!.files!.length > 0) {
-            updatePhotos(attachPhotosRef, post.id);
-            const files = attachPhotosRef.current!.files!;
+            const files = { ...attachPhotosRef.current!.files! };
+            await updatePhotos(attachPhotosRef, post.id);
             for (const index in files) {
                 const fileReader = new FileReader();
                 if (index !== "length" && index !== "item") {
-                    const result = fileReader.readAsDataURL(files[index]);
-
-                    setPhotos((prevState) => [String(result), ...prevState]);
+                    fileReader.readAsDataURL(files[index]);
+                    fileReader.onload = function () {
+                        setPhotos((prevState) => [
+                            String(fileReader.result),
+                            ...prevState,
+                        ]);
+                    };
                 }
             }
         }

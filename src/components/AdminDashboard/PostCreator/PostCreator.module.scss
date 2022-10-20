@@ -29,3 +29,21 @@
 .files-amount {
     margin-left: 0.5rem;
 }
+@media screen and (max-width: 390px) {
+    .container {
+        font-size: 1.5rem;
+        button {
+            font-size: 1.4;
+        }
+        textarea {
+            width: 100vw;
+            font-size: 1.4rem;
+        }
+        input {
+            font-size: 1.4rem;
+        }
+    }
+}
+.add-news-controller {
+    display: flex;
+}

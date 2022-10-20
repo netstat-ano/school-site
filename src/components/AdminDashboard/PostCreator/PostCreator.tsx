@@ -129,14 +129,19 @@ const PostCreator: React.FC<{
                         </select>
                     </div>
 
-                    <div>
-                        <label htmlFor="news">Add to news</label>
-                        <input
-                            onChange={onCheckboxChangeHandler}
-                            id="news"
-                            defaultValue={checkboxValue}
-                            type="checkbox"
-                        />
+                    <div className={styles["add-news-controller"]}>
+                        <div>
+                            <label htmlFor="news">Add to news</label>
+                        </div>
+                        <div>
+                            {" "}
+                            <input
+                                onChange={onCheckboxChangeHandler}
+                                id="news"
+                                defaultValue={checkboxValue}
+                                type="checkbox"
+                            />
+                        </div>
                     </div>
 
                     <AttachPhotos
