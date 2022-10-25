@@ -7,5 +7,6 @@ interface post {
     news: boolean;
     userID: string;
     amountOfPhotos?: number;
+    indexOfPhotos?: number[];
 }
 export default post;

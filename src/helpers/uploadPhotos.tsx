@@ -9,6 +9,8 @@ const uploadPhotos = async (
 
         for (const index in files) {
             if (index !== "item" && index !== "length") {
+                const updates: { [k: string]: {} } = {};
+
                 await uploadBytes(
                     sRef(storage, `${id}/${index}`),
                     files[index]

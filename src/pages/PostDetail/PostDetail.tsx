@@ -18,6 +18,8 @@ const PostDetail: React.FC<{}> = () => {
         category: "",
         news: false,
         userID: "",
+        amountOfPhotos: 0,
+        indexOfPhotos: [],
     });
     const [textValue, setTextValue] = useState<string>("");
     const [titleValue, setTitleValue] = useState<string>("");

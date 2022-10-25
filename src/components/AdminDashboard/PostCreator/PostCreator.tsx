@@ -134,7 +134,6 @@ const PostCreator: React.FC<{
                             <label htmlFor="news">Add to news</label>
                         </div>
                         <div>
-                            {" "}
                             <input
                                 onChange={onCheckboxChangeHandler}
                                 id="news"

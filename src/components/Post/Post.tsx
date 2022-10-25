@@ -14,6 +14,7 @@ import { getDownloadURL, ref as sRef } from "firebase/storage";
 import { storage } from "../../firebase";
 const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
     const attachPhotosRef = useRef<HTMLInputElement>(null);
+    const [photosIndex, setPhotosIndex] = useState<number[]>([]);
     const [photos, setPhotos] = useState<string[]>([]);
     const checkboxRef = useRef<HTMLInputElement>(null);
     const user = useAppSelector((state) => state.authentication);
@@ -35,7 +36,19 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
     const onAttachPhotosHandler = async () => {
         if (attachPhotosRef.current!.files!.length > 0) {
             const files = { ...attachPhotosRef.current!.files! };
+            post.amountOfPhotos = attachPhotosRef.current!.files!.length;
+            const data = { ...post };
+            data.indexOfPhotos = [];
+            const updates: { [k: string]: {} } = {};
+            for (let i = 0; i < attachPhotosRef.current!.files!.length; i++) {
+                data.indexOfPhotos!.push(i);
+            }
+            updates[`/posts/${post.id}`] = data;
+            if (post.news) {
+                updates[`/posts/news/${post.id}`] = data;
+            }
             await updatePhotos(attachPhotosRef, post.id);
+            await update(ref(database), updates);
             for (const index in files) {
                 const fileReader = new FileReader();
                 if (index !== "length" && index !== "item") {
@@ -67,11 +80,22 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
     useEffect(() => {
         const fetchPhotos = async () => {
             if (post!.amountOfPhotos && post!.amountOfPhotos > 0) {
-                for (let i = 0; i < post!.amountOfPhotos; i++) {
+                const reversedIndexes = post.indexOfPhotos?.reverse();
+                for (const i in post.indexOfPhotos) {
+                    const index = Number(i);
                     const url = await getDownloadURL(
-                        sRef(storage, `/${post.id}/${i}`)
+                        sRef(
+                            storage,
+                            `/${post.id}/${post.indexOfPhotos![index]}`
+                        )
                     );
-                    setPhotos((prevState) => [url, ...prevState]);
+                    if (url) {
+                        setPhotosIndex((prevState) => [
+                            ...prevState,
+                            post.indexOfPhotos![index],
+                        ]);
+                        setPhotos((prevState) => [...prevState, url]);
+                    }
                 }
             }
         };
@@ -93,6 +117,9 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
             </div>
             <div>
                 <Photos
+                    photosIndex={photosIndex}
+                    setPhotosIndex={setPhotosIndex}
+                    post={post}
                     admin={admin}
                     id={post.id}
                     setPhotos={setPhotos}
