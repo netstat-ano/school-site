@@ -6,13 +6,17 @@ import { useRef, useState, useEffect } from "react";
 import Photos from "../Photos/Photos";
 import SuccessButton from "../UI/SuccessButton/SuccessButton";
 import DeletePost from "../AdminDashboard/DeletePost/DeletePost";
-import updatePhotos from "../../helpers/uploadPhotos";
+import uploadPhotos from "../../helpers/uploadPhotos";
 import { database } from "../../firebase";
 import { update, ref } from "firebase/database";
 import Button from "../UI/Button/Button";
 import { getDownloadURL, ref as sRef } from "firebase/storage";
 import { storage } from "../../firebase";
-const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
+const Post: React.FC<{
+    setPost: React.Dispatch<React.SetStateAction<post>>;
+    post: post;
+    onEditHandler: () => void;
+}> = (props) => {
     const attachPhotosRef = useRef<HTMLInputElement>(null);
     const [photosIndex, setPhotosIndex] = useState<number[]>([]);
     const [photos, setPhotos] = useState<string[]>([]);
@@ -33,6 +37,23 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
             checkboxRef.current!.checked = true;
         }
     }
+    const fetchPhotos = async () => {
+        if (post!.amountOfPhotos && post!.amountOfPhotos > 0) {
+            for (const i in post.indexOfPhotos) {
+                const index = Number(i);
+                const url = await getDownloadURL(
+                    sRef(storage, `/${post.id}/${post.indexOfPhotos![index]}`)
+                );
+                if (url) {
+                    setPhotosIndex((prevState) => [
+                        ...prevState,
+                        post.indexOfPhotos![index],
+                    ]);
+                    setPhotos((prevState) => [...prevState, url]);
+                }
+            }
+        }
+    };
     const onAttachPhotosHandler = async () => {
         if (attachPhotosRef.current!.files!.length > 0) {
             const files = { ...attachPhotosRef.current!.files! };
@@ -47,20 +68,10 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
             if (post.news) {
                 updates[`/posts/news/${post.id}`] = data;
             }
-            await updatePhotos(attachPhotosRef, post.id);
+            props.setPost(data);
+            await uploadPhotos(attachPhotosRef, post.id);
             await update(ref(database), updates);
-            for (const index in files) {
-                const fileReader = new FileReader();
-                if (index !== "length" && index !== "item") {
-                    fileReader.readAsDataURL(files[index]);
-                    fileReader.onload = function () {
-                        setPhotos((prevState) => [
-                            String(fileReader.result),
-                            ...prevState,
-                        ]);
-                    };
-                }
-            }
+            await fetchPhotos();
         }
     };
     const onCheckboxChangeHandler = (
@@ -78,27 +89,6 @@ const Post: React.FC<{ post: post; onEditHandler: () => void }> = (props) => {
         }
     };
     useEffect(() => {
-        const fetchPhotos = async () => {
-            if (post!.amountOfPhotos && post!.amountOfPhotos > 0) {
-                const reversedIndexes = post.indexOfPhotos?.reverse();
-                for (const i in post.indexOfPhotos) {
-                    const index = Number(i);
-                    const url = await getDownloadURL(
-                        sRef(
-                            storage,
-                            `/${post.id}/${post.indexOfPhotos![index]}`
-                        )
-                    );
-                    if (url) {
-                        setPhotosIndex((prevState) => [
-                            ...prevState,
-                            post.indexOfPhotos![index],
-                        ]);
-                        setPhotos((prevState) => [...prevState, url]);
-                    }
-                }
-            }
-        };
         fetchPhotos();
     }, [post]);
     return (

@@ -57,7 +57,13 @@ const PostDetail: React.FC<{}> = () => {
 
     return (
         <div className={`center ${styles.container}`}>
-            {!editMode && <Post onEditHandler={onEditHandler} post={post} />}
+            {!editMode && (
+                <Post
+                    setPost={setPost}
+                    onEditHandler={onEditHandler}
+                    post={post}
+                />
+            )}
             {editMode && (
                 <form onSubmit={onUpdateHandler}>
                     <PostEditor

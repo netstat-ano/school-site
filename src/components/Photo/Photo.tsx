@@ -12,6 +12,7 @@ const Photo: React.FC<{
     id: string;
     post: post;
     setPhotoIndex: React.Dispatch<React.SetStateAction<number[]>>;
+    photosIndex: number[];
 }> = (props) => {
     const onDeletePhotoHandler = async (
         e: React.MouseEvent<HTMLButtonElement>
@@ -27,9 +28,7 @@ const Photo: React.FC<{
         const data = {
             ...props.post,
             indexOfPhotos: [
-                ...props.post.indexOfPhotos!.filter(
-                    (index) => index !== props.index
-                ),
+                ...props.photosIndex!.filter((index) => index !== props.index),
             ],
         };
         updates[`/posts/${props.id}`] = data;

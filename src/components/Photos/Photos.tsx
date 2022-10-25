@@ -25,6 +25,7 @@ const Photos: React.FC<{
                         setPhotos={props.setPhotos}
                         photoURL={photoURL}
                         index={props.photosIndex[index]}
+                        photosIndex={props.photosIndex}
                     />
                 </div>
             ))}
