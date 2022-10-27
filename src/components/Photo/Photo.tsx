@@ -41,7 +41,6 @@ const Photo: React.FC<{
     return (
         <div className={styles.container}>
             <img className={styles.img} src={props.photoURL}></img>
-            <h4>{props.index}</h4>
             {props.admin && (
                 <CanceledButton
                     button={{

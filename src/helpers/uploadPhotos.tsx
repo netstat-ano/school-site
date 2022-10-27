@@ -9,19 +9,17 @@ const uploadPhotos = async (
         const amountOfPhotos = attachPhotosRef.current!.files.length;
         const updates: { [k: string]: {} } = {};
         updates[`/posts/${id}/amountOfPhotos`] = amountOfPhotos;
-        update(ref(database), updates);
+        await update(ref(database), updates);
         const files = attachPhotosRef.current!.files;
         for (const index in files) {
             if (index !== "item" && index !== "length") {
-                const updates: { [k: string]: {} } = {};
-
                 await uploadBytes(
                     sRef(storage, `${id}/${index}`),
                     files[index]
                 );
             }
         }
-        // attachPhotosRef.current!.value = "";
+        attachPhotosRef.current!.value = "";
     }
 };
 export default uploadPhotos;

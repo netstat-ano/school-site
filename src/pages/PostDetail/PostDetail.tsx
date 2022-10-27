@@ -29,7 +29,10 @@ const PostDetail: React.FC<{}> = () => {
     };
     const onUpdateHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        updatePost({ ...post, title: titleValue, text: textValue }, {});
+        updatePost(
+            { ...post, title: titleValue, text: textValue },
+            { news: post.news }
+        );
         setPost({ ...post, title: titleValue, text: textValue });
         setEditMode(false);
     };

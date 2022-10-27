@@ -41,9 +41,11 @@ const Post: React.FC<{
         if (post!.amountOfPhotos && post!.amountOfPhotos > 0) {
             for (const i in post.indexOfPhotos) {
                 const index = Number(i);
+
                 const url = await getDownloadURL(
                     sRef(storage, `/${post.id}/${post.indexOfPhotos![index]}`)
                 );
+
                 if (url) {
                     setPhotosIndex((prevState) => [
                         ...prevState,
@@ -56,7 +58,6 @@ const Post: React.FC<{
     };
     const onAttachPhotosHandler = async () => {
         if (attachPhotosRef.current!.files!.length > 0) {
-            const files = { ...attachPhotosRef.current!.files! };
             post.amountOfPhotos = attachPhotosRef.current!.files!.length;
             const data = { ...post };
             data.indexOfPhotos = [];
