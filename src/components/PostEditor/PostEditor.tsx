@@ -1,6 +1,7 @@
 import Input from "../UI/Input/Input";
 import Textarea from "../UI/Textarea/Textarea";
 import styles from "./PostEditor.module.scss";
+import { useEffect } from "react";
 const PostEditor: React.FC<{
     setTitleValue: React.Dispatch<React.SetStateAction<string>>;
     setTextValue: React.Dispatch<React.SetStateAction<string>>;
@@ -19,6 +20,10 @@ const PostEditor: React.FC<{
         const target = e.target as HTMLTextAreaElement;
         props.setTextValue(target.value);
     };
+    useEffect(() => {
+        props.setTextValue(props.text);
+        props.setTitleValue(props.title);
+    }, []);
     return (
         <div className={styles.container}>
             <div className={styles["input-controller"]}>

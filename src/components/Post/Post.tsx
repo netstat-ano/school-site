@@ -12,7 +12,10 @@ import { update, ref } from "firebase/database";
 import Button from "../UI/Button/Button";
 import { getDownloadURL, ref as sRef } from "firebase/storage";
 import { storage } from "../../firebase";
+import Spinner from "../UI/Spinner/Spinner";
 const Post: React.FC<{
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     setPost: React.Dispatch<React.SetStateAction<post>>;
     post: post;
     onEditHandler: () => void;
@@ -23,7 +26,7 @@ const Post: React.FC<{
     const checkboxRef = useRef<HTMLInputElement>(null);
     const user = useAppSelector((state) => state.authentication);
     const { post, onEditHandler } = props;
-
+    const { loading, setLoading } = props;
     let date;
     let formattedDate = "";
     let admin = false;
@@ -53,7 +56,10 @@ const Post: React.FC<{
                     ]);
                     setPhotos((prevState) => [...prevState, url]);
                 }
+                setLoading(false);
             }
+        } else {
+            setLoading(false);
         }
     };
     const onAttachPhotosHandler = async () => {
@@ -92,6 +98,13 @@ const Post: React.FC<{
     useEffect(() => {
         fetchPhotos();
     }, [post]);
+    if (loading) {
+        return (
+            <div>
+                <Spinner />
+            </div>
+        );
+    }
     return (
         <>
             <div className={styles["content-controller"]}>

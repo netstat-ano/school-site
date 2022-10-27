@@ -21,6 +21,7 @@ const PostDetail: React.FC<{}> = () => {
         amountOfPhotos: 0,
         indexOfPhotos: [],
     });
+    const [loading, setLoading] = useState<boolean>(true);
     const [textValue, setTextValue] = useState<string>("");
     const [titleValue, setTitleValue] = useState<string>("");
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -62,6 +63,8 @@ const PostDetail: React.FC<{}> = () => {
         <div className={`center ${styles.container}`}>
             {!editMode && (
                 <Post
+                    loading={loading}
+                    setLoading={setLoading}
                     setPost={setPost}
                     onEditHandler={onEditHandler}
                     post={post}
