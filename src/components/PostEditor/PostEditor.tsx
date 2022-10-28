@@ -9,9 +9,6 @@ const PostEditor: React.FC<{
     text: string;
     title: string;
 }> = (props) => {
-    const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-    };
     const onTitleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
         props.setTitleValue(target.value);
