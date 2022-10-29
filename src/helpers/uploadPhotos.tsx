@@ -3,12 +3,18 @@ import { uploadBytes, ref as sRef } from "firebase/storage";
 import { ref, update } from "firebase/database";
 const uploadPhotos = async (
     attachPhotosRef: React.RefObject<HTMLInputElement>,
-    id: string
+    id: string,
+    config?: { acceptation?: boolean }
 ) => {
     if (attachPhotosRef.current!.files) {
         const amountOfPhotos = attachPhotosRef.current!.files.length;
         const updates: { [k: string]: {} } = {};
-        updates[`/posts/${id}/amountOfPhotos`] = amountOfPhotos;
+        if (!config || !config.acceptation) {
+            updates[`/posts/${id}/amountOfPhotos`] = amountOfPhotos;
+        }
+        if (config && config.acceptation) {
+            updates[`/posts/acceptation/${id}/amountOfPhotos`] = amountOfPhotos;
+        }
         await update(ref(database), updates);
         const files = attachPhotosRef.current!.files;
         for (const index in files) {

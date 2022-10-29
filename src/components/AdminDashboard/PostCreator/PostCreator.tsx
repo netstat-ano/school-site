@@ -66,7 +66,11 @@ const PostCreator: React.FC<{
             news,
             userID: String(user.uid),
             amountOfPhotos: attachPhotosRef.current?.files?.length,
+            indexOfPhotos: [],
         };
+        for (let i = 0; i < attachPhotosRef.current!.files!.length; i++) {
+            data.indexOfPhotos!.push(i);
+        }
         if (user.type === "Admin") {
             await updatePost(data, {});
             setPosts((prevState) => [data, ...prevState]);
@@ -80,7 +84,11 @@ const PostCreator: React.FC<{
         }
         setTitleValue("");
         setTextValue("");
-        await uploadPhotos(attachPhotosRef, id);
+        if (user.type !== "Admin") {
+            await uploadPhotos(attachPhotosRef, id, { acceptation: true });
+        } else {
+            await uploadPhotos(attachPhotosRef, id);
+        }
     };
     useEffect(() => {
         if (!selectedCategory || options.length === 1) {

@@ -21,6 +21,7 @@ const PostDetail: React.FC<{}> = () => {
         amountOfPhotos: 0,
         indexOfPhotos: [],
     });
+    const [isAcceptation, setIsAcceptation] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [textValue, setTextValue] = useState<string>("");
     const [titleValue, setTitleValue] = useState<string>("");
@@ -53,6 +54,7 @@ const PostDetail: React.FC<{}> = () => {
                 if (snapshot.exists()) {
                     response = snapshot.val();
                     setPost(response);
+                    setIsAcceptation(true);
                 }
             }
         };
@@ -63,6 +65,7 @@ const PostDetail: React.FC<{}> = () => {
         <div className={`center ${styles.container}`}>
             {!editMode && (
                 <Post
+                    isAcceptation={isAcceptation}
                     loading={loading}
                     setLoading={setLoading}
                     setPost={setPost}

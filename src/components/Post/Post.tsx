@@ -14,6 +14,7 @@ import { getDownloadURL, ref as sRef } from "firebase/storage";
 import { storage } from "../../firebase";
 import Spinner from "../UI/Spinner/Spinner";
 const Post: React.FC<{
+    isAcceptation: boolean;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     setPost: React.Dispatch<React.SetStateAction<post>>;
@@ -48,6 +49,7 @@ const Post: React.FC<{
                 const url = await getDownloadURL(
                     sRef(storage, `/${post.id}/${post.indexOfPhotos![index]}`)
                 );
+                console.log(url);
 
                 if (url) {
                     setPhotosIndex((prevState) => [
@@ -71,10 +73,15 @@ const Post: React.FC<{
             for (let i = 0; i < attachPhotosRef.current!.files!.length; i++) {
                 data.indexOfPhotos!.push(i);
             }
-            updates[`/posts/${post.id}`] = data;
-            if (post.news) {
-                updates[`/posts/news/${post.id}`] = data;
+            if (!props.isAcceptation) {
+                updates[`/posts/${post.id}`] = data;
+                if (post.news) {
+                    updates[`/posts/news/${post.id}`] = data;
+                }
+            } else {
+                updates[`/posts/acceptation/${post.id}`] = data;
             }
+
             props.setPost(data);
             await uploadPhotos(attachPhotosRef, post.id);
             await update(ref(database), updates);
