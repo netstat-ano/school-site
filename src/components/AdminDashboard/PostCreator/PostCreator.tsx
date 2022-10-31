@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import updatePost from "../../../helpers/updatePost";
 import PostEditor from "../../PostEditor/PostEditor";
+import editPostData from "../../../helpers/editPostData";
 const PostCreator: React.FC<{
     acceptationPosts: post[];
     setAcceptationPosts: React.Dispatch<React.SetStateAction<post[]>>;
@@ -68,14 +69,16 @@ const PostCreator: React.FC<{
             amountOfPhotos: attachPhotosRef.current?.files?.length,
             indexOfPhotos: [],
         };
-        for (let i = 0; i < attachPhotosRef.current!.files!.length; i++) {
-            data.indexOfPhotos!.push(i);
-        }
+        const acceptation = user.type === "Admin" ? false : true;
+        await editPostData({
+            acceptation: acceptation,
+            post: data,
+            amountOfPhotos: attachPhotosRef.current!.files!.length,
+        });
+
         if (user.type === "Admin") {
-            await updatePost(data, {});
             setPosts((prevState) => [data, ...prevState]);
         } else {
-            await updatePost(data, { acceptation: true });
             setNotification("Query was sended");
             setTimeout(() => {
                 setNotification("");

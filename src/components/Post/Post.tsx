@@ -13,6 +13,7 @@ import Button from "../UI/Button/Button";
 import { getDownloadURL, ref as sRef } from "firebase/storage";
 import { storage } from "../../firebase";
 import Spinner from "../UI/Spinner/Spinner";
+import editPostData from "../../helpers/editPostData";
 const Post: React.FC<{
     isAcceptation: boolean;
     loading: boolean;
@@ -70,21 +71,13 @@ const Post: React.FC<{
             const data = { ...post };
             data.indexOfPhotos = [];
             const updates: { [k: string]: {} } = {};
-            for (let i = 0; i < attachPhotosRef.current!.files!.length; i++) {
-                data.indexOfPhotos!.push(i);
-            }
-            if (!props.isAcceptation) {
-                updates[`/posts/${post.id}`] = data;
-                if (post.news) {
-                    updates[`/posts/news/${post.id}`] = data;
-                }
-            } else {
-                updates[`/posts/acceptation/${post.id}`] = data;
-            }
-
+            await editPostData({
+                acceptation: props.isAcceptation,
+                post: data,
+                amountOfPhotos: attachPhotosRef.current!.files!.length,
+            });
             props.setPost(data);
             await uploadPhotos(attachPhotosRef, post.id);
-            await update(ref(database), updates);
             await fetchPhotos();
         }
     };

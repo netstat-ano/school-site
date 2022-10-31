@@ -11,6 +11,7 @@ const editPostData = async (config: {
     for (let i = 0; i < amountOfPhotos; i++) {
         post.indexOfPhotos!.push(i);
     }
+
     if (!acceptation) {
         updates[`/posts/${post.id}`] = post;
         if (post.news) {
