@@ -15,10 +15,7 @@ const UserList: React.FC<{
         e: React.MouseEvent<HTMLSpanElement>,
         uid: string
     ) => {
-        // const updates: { [k: string]: {} | null } = {};
-        // updates[`user/${uid}`] = null;
-        // update(ref(database), updates);
-        // deleteUser()
+        //it's impossible to delete account without logging into it so I didn't do this functionality.
     };
     useEffect(() => {
         const fetchUsers = async () => {
@@ -36,7 +33,7 @@ const UserList: React.FC<{
         <div>
             {users.map((user) => {
                 return (
-                    <div key={user.uid} className={styles.container}>
+                    <div key={user.uid} className={styles["user-list"]}>
                         <div>{user.email}</div>
                         <div>{user.displayName}</div>
                         <div>{user.type}</div>
@@ -47,7 +44,7 @@ const UserList: React.FC<{
                                 }}
                             >
                                 <FontAwesomeIcon
-                                    className={styles.icon}
+                                    className={styles["user-list__icon"]}
                                     icon={faXmark}
                                 />
                             </span>

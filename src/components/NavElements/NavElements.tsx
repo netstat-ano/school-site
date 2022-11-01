@@ -38,11 +38,14 @@ const NavElements: React.FC<{}> = () => {
         fetchData();
     }, []);
     return (
-        <div className={styles.container}>
+        <div className={styles["nav-elements"]}>
             {categories.map((category) => (
-                <div key={category} className={styles["nav-controller"]}>
+                <div
+                    key={category}
+                    className={styles["nav-elements__nav-controller"]}
+                >
                     <div
-                        className={styles.nav}
+                        className={styles["nav-elements__nav-controller__nav"]}
                         onMouseOver={(e) => {
                             onMouseOverHandler(e, category);
                         }}

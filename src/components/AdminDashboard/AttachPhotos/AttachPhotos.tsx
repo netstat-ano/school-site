@@ -16,9 +16,9 @@ const AttachPhotos = forwardRef<
         setIsEmpty(false);
     };
     return (
-        <div>
+        <div className={styles["attach-photos"]}>
             <label
-                className={!isEmpty ? styles["not-empty"] : ""}
+                className={!isEmpty ? styles["attach-photos__not-empty"] : ""}
                 htmlFor={props.name}
             >
                 {props.children}
@@ -26,7 +26,7 @@ const AttachPhotos = forwardRef<
             <input
                 onInput={onInputHandler}
                 {...props.input}
-                className={styles.input}
+                className={styles["attach-photos__input"]}
                 accept={props.accept}
                 ref={ref}
                 multiple={props.multiple}

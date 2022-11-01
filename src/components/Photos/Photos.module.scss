@@ -1,6 +1,7 @@
-.container {
+.photos {
     display: flex;
+    flex-wrap: wrap;
 }
-.img-controller {
+.photos__img-controller {
     margin: 0.5rem;
 }

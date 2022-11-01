@@ -1,5 +1,5 @@
 @import "../../scss/variables";
-.container {
+.news-shortcut {
     margin-top: 1rem;
     margin-left: 1rem;
     font-size: 1.5rem;
@@ -7,21 +7,21 @@
         cursor: pointer;
     }
 }
-.space {
+.news-shortcut__content__space {
     width: 100%;
     height: 1px;
     margin-top: 0.5rem;
     background-color: $blue-theme;
 }
 
-.date {
+.news-shortcut__content__date {
     color: $gray-theme;
     font-size: 1.3rem;
 }
-.title {
+.news-shortcut__content__text-title {
     font-weight: bold;
 }
-.category {
+.news-shortcut__content__category {
     color: $gray-theme;
     font-size: 0.8rem;
 }

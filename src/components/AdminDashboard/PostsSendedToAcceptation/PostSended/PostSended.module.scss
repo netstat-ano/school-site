@@ -1,12 +1,12 @@
 @import "../../../../scss/variables";
-.icon {
+.post-sended__icon {
     color: $canceled-theme;
 }
-.link {
+.post-sended__link {
     color: black;
     text-decoration: none;
 }
-.container {
+.post-sended {
     width: 20%;
     display: flex;
     justify-content: space-between;

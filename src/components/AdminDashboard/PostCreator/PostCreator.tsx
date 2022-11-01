@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import SuccessButton from "../../UI/SuccessButton/SuccessButton";
 import styles from "./PostCreator.module.scss";
 import { useAppSelector } from "../../../hooks/use-app-selector";
-import { ref, update, get } from "firebase/database";
+import { ref, get } from "firebase/database";
 import { database } from "../../../firebase";
 import PostsList from "../PostsList/PostsList";
 import post from "../../../models/post";
@@ -14,7 +14,6 @@ import uploadPhotos from "../../../helpers/uploadPhotos";
 import Button from "../../UI/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import updatePost from "../../../helpers/updatePost";
 import PostEditor from "../../PostEditor/PostEditor";
 import editPostData from "../../../helpers/editPostData";
 const PostCreator: React.FC<{
@@ -111,7 +110,7 @@ const PostCreator: React.FC<{
         fetchPosts();
     }, []);
     return (
-        <div className={styles.container}>
+        <div className={styles["post-creator"]}>
             <section>
                 <form onSubmit={onAddPostHandler}>
                     <h3>Create a post</h3>
@@ -140,7 +139,9 @@ const PostCreator: React.FC<{
                         </select>
                     </div>
 
-                    <div className={styles["add-news-controller"]}>
+                    <div
+                        className={styles["post-creator__add-news-controller"]}
+                    >
                         <div>
                             <label htmlFor="news">Add to news</label>
                         </div>
@@ -161,13 +162,15 @@ const PostCreator: React.FC<{
                         name="photos"
                     >
                         <Button
-                            className={styles["upload-button"]}
+                            className={styles["post-creator__upload-button"]}
                             button={{ type: "button" }}
                         >
                             <>
                                 Attach a photo
                                 <FontAwesomeIcon
-                                    className={styles["upload-icon"]}
+                                    className={
+                                        styles["post-creator__upload-icon"]
+                                    }
                                     icon={faUpload}
                                 />
                             </>

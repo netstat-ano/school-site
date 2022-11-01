@@ -18,9 +18,9 @@ const LoginForm: React.FC<{}> = () => {
         );
     };
     return (
-        <div className={styles.form}>
+        <div className={styles["login-form"]}>
             <form onSubmit={onSubmitHandler}>
-                <div className={styles["input-controller"]}>
+                <div className={styles["login-form__input-controller"]}>
                     <Input
                         input={{
                             id: "email",
@@ -30,7 +30,7 @@ const LoginForm: React.FC<{}> = () => {
                         }}
                     ></Input>
                 </div>
-                <div className={styles["input-controller"]}>
+                <div className={styles["login-form__input-controller"]}>
                     <Input
                         input={{
                             id: "password",
@@ -40,7 +40,7 @@ const LoginForm: React.FC<{}> = () => {
                         }}
                     ></Input>
                 </div>
-                <div className={styles["button-controller"]}>
+                <div className={styles["login-form__button-controller"]}>
                     <SuccessButton button={{ type: "submit" }}>
                         Log in
                     </SuccessButton>

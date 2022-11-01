@@ -15,19 +15,23 @@ const CategorieCreator: React.FC<{ posts: post[] }> = (props) => {
         inputRef.current!.value = "";
     };
     return (
-        <div className={styles.container}>
+        <div className={styles["categorie-creator"]}>
             <section>
                 <form onSubmit={onSubmitHandler}>
                     <h3>Create category</h3>
                     <div>
-                        <ul className={styles["categories"]}>
+                        <ul className={styles["categorie_creator__categories"]}>
                             <CategoriesList posts={props.posts} />
                         </ul>
                     </div>
                     <div>
                         <Input ref={inputRef} />
                     </div>
-                    <div className={styles["button-controller"]}>
+                    <div
+                        className={
+                            styles["categorie-creator__button-controller"]
+                        }
+                    >
                         <SuccessButton button={{ type: "submit" }}>
                             Add category
                         </SuccessButton>

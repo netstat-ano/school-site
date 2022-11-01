@@ -15,7 +15,7 @@ const DeletePost: React.FC<{ post: post }> = (props) => {
     return (
         <FontAwesomeIcon
             onClick={onDeletePost}
-            className={styles.icon}
+            className={styles["delete-post__icon"]}
             icon={faTrash}
         />
     );

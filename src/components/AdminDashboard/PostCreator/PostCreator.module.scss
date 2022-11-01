@@ -1,4 +1,4 @@
-.container {
+.post-creator {
     width: 50%;
     font-size: 1.6rem;
     button {
@@ -13,10 +13,10 @@
     }
 }
 
-.upload-icon {
+.post-creator__upload-icon {
     margin-left: 0.5rem;
 }
-.upload-button {
+.post-creator__upload-button {
     pointer-events: none;
 
     &:hover {
@@ -44,6 +44,6 @@
         }
     }
 }
-.add-news-controller {
+.post-creator__add-news-controller {
     display: flex;
 }

@@ -14,9 +14,9 @@ const Photos: React.FC<{
     console.log(props.photosIndex);
 
     return (
-        <div className={styles.container}>
+        <div className={styles["photos"]}>
             {props.photos.map((photoURL, index) => (
-                <div key={index} className={styles["img-controller"]}>
+                <div key={index} className={styles["photos__img-controller"]}>
                     <Photo
                         setPhotoIndex={props.setPhotosIndex}
                         post={props.post}

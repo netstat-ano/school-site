@@ -37,7 +37,10 @@ const AcceptationDetail: React.FC<{
     return (
         <div className={styles.container}>
             <div>
-                <Link className={styles.link} to={`/post/${props.post.id}`}>
+                <Link
+                    className={styles["container__link"]}
+                    to={`/post/${props.post.id}`}
+                >
                     {props.post.title}
                 </Link>
             </div>

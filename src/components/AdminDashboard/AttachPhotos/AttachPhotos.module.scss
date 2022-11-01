@@ -1,8 +1,8 @@
 @import "../../../scss/variables";
-.input {
+.attach-photos__input {
     display: none;
 }
-.not-empty {
+.attach-photos__not-empty {
     border: 3px solid $success-theme;
     background-color: $blue-theme;
 }

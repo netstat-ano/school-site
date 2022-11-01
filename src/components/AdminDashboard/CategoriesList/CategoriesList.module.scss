@@ -1,10 +1,10 @@
 @import "../../../scss/variables";
-.categories-list-item {
+.categories-list__item {
     width: 200px;
     display: flex;
     justify-content: space-between;
 }
-.categories-list-item-delete {
+.categories-list__item-delete {
     color: $canceled-theme;
     &:hover {
         cursor: pointer;

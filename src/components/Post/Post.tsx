@@ -106,15 +106,19 @@ const Post: React.FC<{
         );
     }
     return (
-        <>
-            <div className={styles["content-controller"]}>
+        <div className={styles.post}>
+            <div className={styles["post__user-data"]}>
                 <div className={styles.username}>
                     {post?.user}
                     <br></br>
-                    <span className={styles.date}>{formattedDate}</span>
+                    <span className={styles["post__user-data__date"]}>
+                        {formattedDate}
+                    </span>
                 </div>
-                <div className={styles.text}>
-                    <span className={styles.title}>{post?.title}</span>
+                <div className={styles["post__user-data__text"]}>
+                    <span className={styles["post__user-data__text-title"]}>
+                        {post?.title}
+                    </span>
                     <br></br>
                     {post?.text}
                 </div>
@@ -131,39 +135,45 @@ const Post: React.FC<{
                 />
             </div>
             {admin && (
-                <div className={styles["addnews-controller"]}>
-                    <label htmlFor="news">Add to news</label>
-                    <input
-                        ref={checkboxRef}
-                        onInput={onCheckboxChangeHandler}
-                        id="news"
-                        type="checkbox"
-                    ></input>
+                <div className={styles["post__admin"]}>
+                    <div className={styles["post__admin__add-news-controller"]}>
+                        <label htmlFor="news">Add to news</label>
+                        <input
+                            ref={checkboxRef}
+                            onInput={onCheckboxChangeHandler}
+                            id="news"
+                            type="checkbox"
+                        ></input>
+                    </div>
+                    <div>
+                        <SuccessButton button={{ onClick: onEditHandler }}>
+                            Edit post
+                        </SuccessButton>
+                    </div>
+                    <div>
+                        <DeletePost post={post} />
+                    </div>
+                    <div>
+                        <AttachPhotos
+                            input={{ onChange: onAttachPhotosHandler }}
+                            ref={attachPhotosRef}
+                            name="attachPhotos"
+                            multiple={true}
+                            accept="image/png, image/jpeg"
+                        >
+                            <Button
+                                className={
+                                    styles["post__attach-photos__attach-button"]
+                                }
+                                button={{ type: "button" }}
+                            >
+                                Attach photos
+                            </Button>
+                        </AttachPhotos>
+                    </div>
                 </div>
             )}
-            {admin && (
-                <SuccessButton button={{ onClick: onEditHandler }}>
-                    Edit post
-                </SuccessButton>
-            )}
-            {admin && <DeletePost post={post} />}
-            {admin && (
-                <AttachPhotos
-                    input={{ onChange: onAttachPhotosHandler }}
-                    ref={attachPhotosRef}
-                    name="attachPhotos"
-                    multiple={true}
-                    accept="image/png, image/jpeg"
-                >
-                    <Button
-                        className={styles["attach-button"]}
-                        button={{ type: "button" }}
-                    >
-                        Attach photos
-                    </Button>
-                </AttachPhotos>
-            )}
-        </>
+        </div>
     );
 };
 export default Post;

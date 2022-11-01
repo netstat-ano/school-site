@@ -1,23 +1,27 @@
 @import "../../scss/variables";
-.headline {
-    font-weight: bold;
-}
-.content-controller {
+.post__user-data {
     display: flex;
 }
-.text {
+.post__user-data__text {
     margin-left: 4rem;
 }
-.title {
+.post__user-data__text-title {
     font-weight: bold;
 }
-.date {
+.post__user-data__date {
     font-size: 1rem;
     color: $gray-theme;
 }
-.addnews-controller {
+.post__admin__add-news-controller {
     margin-top: 1rem;
 }
-.attach-button {
+.post__attach-photos__attach-button {
     pointer-events: none;
+}
+.post__admin {
+    display: flex;
+    flex-direction: column;
+}
+.post {
+    max-width: 500px;
 }

@@ -13,10 +13,15 @@ const NavElement: React.FC<{
     return (
         <div
             className={`${
-                isShown === props.category ? styles.container : styles.dnone
+                isShown === props.category
+                    ? styles["nav-element"]
+                    : styles.dnone
             }`}
         >
-            <Link className={`link ${styles.link}`} to={`/post/${post.id}`}>
+            <Link
+                className={`link ${styles["nav-element__link"]}`}
+                to={`/post/${post.id}`}
+            >
                 {post.title}
             </Link>
         </div>

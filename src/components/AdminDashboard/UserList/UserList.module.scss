@@ -1,5 +1,5 @@
 @import "../../../scss/variables";
-.container {
+.user-list {
     display: flex;
     justify-content: space-between;
     font-size: 1.4rem;
@@ -8,11 +8,11 @@
     }
     max-width: 500px;
 }
-.icon {
+.user-list__icon {
     color: $canceled-theme;
 }
 @media screen and (max-width: 430px) {
-    .container {
+    .user-list {
         font-size: 1rem;
     }
 }

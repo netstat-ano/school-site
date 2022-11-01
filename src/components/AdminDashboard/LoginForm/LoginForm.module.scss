@@ -1,29 +1,29 @@
-.form {
+.login-form {
     margin-top: 40vh;
     padding: 4rem 2rem;
     border: 1px solid black;
 }
-.input-controller {
+.login-form__input-controller {
     margin-top: 1rem;
     input {
         font-size: 1.8rem;
     }
 }
-.button-controller {
+.login-form__button-controller {
     margin-top: 1rem;
     button {
         font-size: 1.4rem;
     }
 }
 @media screen and(max-width: 460px) {
-    .input-controller {
+    .login-form__input-controller {
         input {
             font-size: 1.4rem;
         }
     }
 }
 @media screen and(max-width: 360px) {
-    .input-controller {
+    .login-form__input-controller {
         input {
             font-size: 1.2rem;
         }

@@ -22,8 +22,8 @@ const PostEditor: React.FC<{
         props.setTitleValue(props.title);
     }, []);
     return (
-        <div className={styles.container}>
-            <div className={styles["input-controller"]}>
+        <div className={styles["post-editor"]}>
+            <div className={styles["post-editor__input-controller"]}>
                 <Input
                     input={{
                         onChange: onTitleChangeHandler,

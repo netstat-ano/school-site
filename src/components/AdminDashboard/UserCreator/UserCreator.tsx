@@ -49,7 +49,7 @@ const UserCreator: React.FC<{}> = () => {
         }
     };
     return (
-        <div className={styles.container}>
+        <div className={styles["user-creator"]}>
             <form onSubmit={onAddUserHandler}>
                 <h3>Create a user</h3>
                 <UserList users={users} setUsers={setUsers} />

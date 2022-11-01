@@ -34,7 +34,7 @@ const CategoriesList: React.FC<{
     return (
         <>
             {categories.map((category, index) => (
-                <div key={index} className={styles["categories-list-item"]}>
+                <div key={index} className={styles["categories-list__item"]}>
                     <div>
                         <li>{category}</li>
                     </div>
@@ -44,7 +44,7 @@ const CategoriesList: React.FC<{
                         >
                             <FontAwesomeIcon
                                 className={
-                                    styles["categories-list-item-delete"]
+                                    styles["categories-list__item-delete"]
                                 }
                                 icon={faXmark}
                             />

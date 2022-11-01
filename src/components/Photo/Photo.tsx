@@ -39,8 +39,8 @@ const Photo: React.FC<{
         await deleteObject(photoRef);
     };
     return (
-        <div className={styles.container}>
-            <img className={styles.img} src={props.photoURL}></img>
+        <div className={styles.photo}>
+            <img className={styles["photo__img"]} src={props.photoURL}></img>
             {props.admin && (
                 <CanceledButton
                     button={{

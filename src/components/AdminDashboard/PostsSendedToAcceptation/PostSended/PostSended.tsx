@@ -21,15 +21,21 @@ const PostSended: React.FC<{
         );
     };
     return (
-        <div className={styles.container}>
+        <div className={styles["post-sended"]}>
             <div>
-                <Link className={styles.link} to={`/post/${post.id}`}>
+                <Link
+                    className={styles["post-sended__link"]}
+                    to={`/post/${post.id}`}
+                >
                     {post.title}
                 </Link>
             </div>
             <div>
                 <span onClick={onDeleteHandler}>
-                    <FontAwesomeIcon className={styles.icon} icon={faXmark} />
+                    <FontAwesomeIcon
+                        className={styles["post-sended__icon"]}
+                        icon={faXmark}
+                    />
                 </span>
             </div>
         </div>
