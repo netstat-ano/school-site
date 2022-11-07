@@ -1,18 +1,20 @@
 @import "../../../scss/variables";
 .user-list {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     font-size: 1.4rem;
-    div {
-        padding: 0.5rem;
-    }
-    max-width: 500px;
 }
 .user-list__icon {
     color: $canceled-theme;
 }
-@media screen and (max-width: 430px) {
+@media screen and (max-width: 550px) {
     .user-list {
         font-size: 1rem;
+    }
+}
+@media screen and (max-width: 450px) {
+    .user-list {
+        font-size: 0.8rem;
     }
 }

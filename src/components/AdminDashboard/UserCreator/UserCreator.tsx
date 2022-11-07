@@ -61,22 +61,39 @@ const UserCreator: React.FC<{}> = () => {
                     </select>
                 </div>
                 <div>
-                    <Input ref={emailRef} input={{ placeholder: "E-mail" }} />
+                    <Input
+                        ref={emailRef}
+                        input={{
+                            placeholder: "E-mail",
+                            className: styles["user-creator__input"],
+                        }}
+                    />
                 </div>
                 <div>
                     <Input
                         ref={passwordRef}
-                        input={{ placeholder: "Password" }}
+                        input={{
+                            placeholder: "Password",
+                            className: styles["user-creator__input"],
+                        }}
                     />
                 </div>
                 <div>
                     <Input
                         ref={usernameRef}
-                        input={{ placeholder: "Username" }}
+                        input={{
+                            placeholder: "Username",
+                            className: styles["user-creator__input"],
+                        }}
                     />
                 </div>
                 <div>
-                    <SuccessButton button={{ type: "submit" }}>
+                    <SuccessButton
+                        button={{
+                            type: "submit",
+                            className: styles["user-creator__input"],
+                        }}
+                    >
                         Add user
                     </SuccessButton>
                 </div>

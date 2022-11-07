@@ -25,7 +25,12 @@ const CategorieCreator: React.FC<{ posts: post[] }> = (props) => {
                         </ul>
                     </div>
                     <div>
-                        <Input ref={inputRef} />
+                        <Input
+                            input={{
+                                className: styles["categorie-creator__input"],
+                            }}
+                            ref={inputRef}
+                        />
                     </div>
                     <div
                         className={

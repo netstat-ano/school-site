@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import PostDetail from "./pages/PostDetail/PostDetail";
 import Layout from "./components/Layout/Layout";
+import ClassRegister from "./components/ClassRegister/ClassRegister";
 function App() {
     const navigate = useNavigate();
     useEffect(() => {
@@ -20,6 +21,14 @@ function App() {
                     element={
                         <Layout>
                             <Admin />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/class-register/*"
+                    element={
+                        <Layout>
+                            <ClassRegister />
                         </Layout>
                     }
                 />

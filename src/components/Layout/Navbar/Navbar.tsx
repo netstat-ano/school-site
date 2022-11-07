@@ -18,9 +18,20 @@ const Navbar: React.FC<{}> = () => {
                         </span>
                     </Link>
                 </div>
-                <div className={styles["navbar__admin"]}>
-                    <Link className={styles["navbar__admin__link"]} to="/admin">
+                <div className={styles["navbar__important"]}>
+                    <Link
+                        className={styles["navbar__important__link"]}
+                        to="/admin"
+                    >
                         Admin
+                    </Link>
+                </div>
+                <div className={styles["navbar__important"]}>
+                    <Link
+                        className={styles["navbar__important__link"]}
+                        to="/class-register"
+                    >
+                        Dziennik
                     </Link>
                 </div>
             </div>
