@@ -1,0 +1,31 @@
+.class-row__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+}
+.class-row__header-name,
+.class-row__header-teacher {
+    font-size: 1.5rem;
+}
+.class-row__header-name {
+    font-weight: bold;
+}
+.class-row__header-teacher {
+}
+.class-row__header-teacher__icon {
+    margin-left: 0.5rem;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.class-row__students {
+    ul {
+        list-style-type: none;
+    }
+}
+.class-row__student__link {
+    color: black;
+    text-decoration: none;
+}

@@ -12,15 +12,24 @@ const AddStudentForm: React.FC<{
     const onChangeHandler = () => {
         const name = nameRef!.current!.value;
         const surname = surnameRef!.current!.value;
-        props.setStudentsList((prevState) => {
-            prevState[props.index] = new Student(
-                name.trim(),
-                surname.trim(),
-                {},
-                `sid${Date.now()}`
-            );
-            return [...prevState];
-        });
+        if (!wasTouched) {
+            props.setStudentsList((prevState) => {
+                return prevState.filter(
+                    (element, index) =>
+                        props.amountOfAddStudentForms.length - 1 !== index
+                );
+            });
+        } else {
+            props.setStudentsList((prevState) => {
+                prevState[props.index] = new Student(
+                    name.trim(),
+                    surname.trim(),
+                    {},
+                    `sid${Date.now()}`
+                );
+                return [...prevState];
+            });
+        }
         if (
             name.trim().length > 0 &&
             surname.trim().length > 0 &&
@@ -36,12 +45,6 @@ const AddStudentForm: React.FC<{
                 surnameRef!.current!.value.trim().length === 0) &&
             wasTouched
         ) {
-            props.setStudentsList((prevState) => {
-                return prevState.filter(
-                    (element, index) =>
-                        props.amountOfAddStudentForms.length - 1 !== index
-                );
-            });
             props.setAmountOfAddStudentForms((prevState) =>
                 prevState.filter((element) => prevState.length - 1 !== element)
             );
@@ -63,9 +66,6 @@ const AddStudentForm: React.FC<{
                     ref={surnameRef}
                     name="surname"
                 ></input>
-            </div>
-            <div>
-                <button type="submit">Dodaj ucznia</button>
             </div>
         </>
     );
