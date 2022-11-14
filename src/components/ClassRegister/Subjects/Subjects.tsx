@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SelectClass from "../SelectClass/SelectClass";
 import StudentClass from "../../../models/StudentClass";
-const Grades: React.FC<{}> = () => {
+import SubjectsForm from "../SubjectsForm/SubjectsForm";
+const Subjects: React.FC<{}> = () => {
     const [classesNames, setClassesNames] = useState<StudentClass[]>();
     const [selectedClass, setSelectedClass] = useState<StudentClass>();
     const onInitHandler = (classes: StudentClass[]) => {
         setClassesNames(classes);
         setSelectedClass(classes[0]);
     };
-    const onSelectChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const onSelectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedClassFromArr = classesNames?.find(
             (studentClass) => studentClass.id === e.target.value
         );
@@ -18,10 +19,11 @@ const Grades: React.FC<{}> = () => {
         <div>
             <SelectClass
                 onInit={onInitHandler}
+                onSelect={onSelectHandler}
                 classesNames={classesNames}
-                onSelect={onSelectChangeHandler}
             />
+            <SubjectsForm />
         </div>
     );
 };
-export default Grades;
+export default Subjects;
