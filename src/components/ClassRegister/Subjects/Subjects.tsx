@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import SelectClass from "../SelectClass/SelectClass";
 import StudentClass from "../../../models/StudentClass";
 import SubjectsForm from "../SubjectsForm/SubjectsForm";
+import SubjectsList from "../SubjectsList/SubjectsList";
 const Subjects: React.FC<{}> = () => {
     const [classesNames, setClassesNames] = useState<StudentClass[]>();
     const [selectedClass, setSelectedClass] = useState<StudentClass>();
+    const [subjectsList, setSubjectsList] = useState<string[]>([]);
     const onInitHandler = (classes: StudentClass[]) => {
         setClassesNames(classes);
         setSelectedClass(classes[0]);
@@ -22,7 +24,16 @@ const Subjects: React.FC<{}> = () => {
                 onSelect={onSelectHandler}
                 classesNames={classesNames}
             />
-            <SubjectsForm />
+            <SubjectsList
+                selectedClass={selectedClass}
+                subjectsList={subjectsList}
+                setSubjectsList={setSubjectsList}
+            />
+            <SubjectsForm
+                setSubjectsList={setSubjectsList}
+                subjectsList={subjectsList}
+                selectedClass={selectedClass}
+            />
         </div>
     );
 };

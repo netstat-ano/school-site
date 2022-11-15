@@ -18,7 +18,8 @@ const AddClass: React.FC<{}> = () => {
             studentsList,
             classNameRef!.current!.value,
             mainTeacherRef!.current!.value,
-            studentClassID
+            studentClassID,
+            []
         );
         studentClass.save();
     };

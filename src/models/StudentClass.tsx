@@ -6,16 +6,19 @@ class StudentClass {
     name: string;
     mainTeacher: string;
     id: string;
+    subjects: string[];
     constructor(
         students: Student[],
         name: string,
         mainTeacher: string,
-        id: string
+        id: string,
+        subjects: string[]
     ) {
         this.students = students;
         this.name = name;
         this.mainTeacher = mainTeacher;
         this.id = id;
+        this.subjects = subjects;
     }
     async save() {
         const updates: { [k: string]: {} } = {};
@@ -40,6 +43,13 @@ class StudentClass {
             names.push(studentClass.name);
         });
         return names;
+    }
+    static async getClassById(id: string) {
+        const studentClasses = await this.getArrayStudentClasses();
+        const studentClass: StudentClass | undefined = studentClasses.find(
+            (studentClass) => studentClass.id === id
+        );
+        return studentClass;
     }
     static async getStudentClasses() {
         const classes = await get(ref(database, `/studentClasses`));
