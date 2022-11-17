@@ -12,8 +12,11 @@ const SelectClass: React.FC<{
         };
         fetchClassesNames();
     }, []);
+    const onSelectClassHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        props.onSelect(e);
+    };
     return (
-        <select onChange={props.onSelect}>
+        <select onChange={onSelectClassHandler}>
             {props.classesNames?.map((studentClass) => {
                 return (
                     <option value={`${studentClass.id}`}>

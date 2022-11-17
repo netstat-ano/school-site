@@ -22,6 +22,7 @@ const SubjectsForm: React.FC<{
             [...props.subjectsList, inputRef.current!.value]
         );
         await updatedClass.save();
+        inputRef.current!.value = "";
     };
     return (
         <form onSubmit={onSubmitHandler}>

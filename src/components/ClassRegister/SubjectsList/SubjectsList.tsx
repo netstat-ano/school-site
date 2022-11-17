@@ -27,7 +27,13 @@ const SubjectsList: React.FC<{
         <ul className={styles["subject-list"]}>
             {props.subjectsList &&
                 props.subjectsList.map((subject) => (
-                    <SubjectListElement>
+                    <SubjectListElement
+                        key={subject}
+                        subjectsList={props.subjectsList}
+                        setSubjectList={props.setSubjectsList}
+                        subject={subject}
+                        selectedClass={props.selectedClass}
+                    >
                         <>{subject}</>
                     </SubjectListElement>
                 ))}
