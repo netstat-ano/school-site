@@ -3,10 +3,12 @@ import SelectClass from "../SelectClass/SelectClass";
 import StudentClass from "../../../models/StudentClass";
 import SelectSubject from "../SelectSubject/SelectSubject";
 import StudentsList from "../StudentsList/StudentsList";
-import GradesForm from "../GradesForm/GradesForm";
+const STUDENT_CLASS_TEMPLATE = new StudentClass([], "", "", "", []);
 const Grades: React.FC<{}> = () => {
     const [classesNames, setClassesNames] = useState<StudentClass[]>();
-    const [selectedClass, setSelectedClass] = useState<StudentClass>();
+    const [selectedClass, setSelectedClass] = useState<StudentClass>(
+        STUDENT_CLASS_TEMPLATE
+    );
     const [selectedSubject, setSelectedSubject] = useState<string>("");
     useEffect(() => {
         if (selectedClass) {
@@ -14,7 +16,7 @@ const Grades: React.FC<{}> = () => {
                 setSelectedSubject(selectedClass!.subjects[0]);
             }
         }
-    }, [selectedClass]);
+    }, [selectedClass.name]);
     const onInitHandler = (classes: StudentClass[]) => {
         setClassesNames(classes);
         setSelectedClass(classes[0]);
@@ -22,10 +24,12 @@ const Grades: React.FC<{}> = () => {
     const onSelectClassChangeHandler = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        const selectedClassFromArr = classesNames?.find(
+        const selectedClassFromArr = classesNames!.find(
             (studentClass) => studentClass.id === e.target.value
         );
-        setSelectedClass(selectedClassFromArr);
+        if (selectedClassFromArr) {
+            setSelectedClass(selectedClassFromArr);
+        }
     };
     const onSelectSubjectChangeHandler = (
         e: React.ChangeEvent<HTMLSelectElement>
@@ -40,17 +44,18 @@ const Grades: React.FC<{}> = () => {
                 classesNames={classesNames}
                 onSelect={onSelectClassChangeHandler}
             />
-            {selectedClass && (
+            {selectedClass && setSelectedClass && (
                 <>
                     <SelectSubject
                         subjects={selectedClass.subjects}
                         onSelect={onSelectSubjectChangeHandler}
                     />
                     <StudentsList
+                        setSelectedClass={setSelectedClass}
+                        selectedClass={selectedClass}
                         selectedSubject={selectedSubject}
-                        students={selectedClass!.students}
+                        students={selectedClass.students}
                     />
-                    <GradesForm selectedClass={selectedClass} />
                 </>
             )}
         </div>

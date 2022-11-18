@@ -11,9 +11,6 @@ const AddClass: React.FC<{}> = () => {
     const studentClassID = `scid${Date.now()}`;
     const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        studentsList.forEach((student) => {
-            student.save();
-        });
         const studentClass = new StudentClass(
             studentsList,
             classNameRef!.current!.value,
