@@ -1,16 +1,12 @@
 import { update, ref, get } from "firebase/database";
 import { database } from "../firebase";
+import grades from "./grades";
 class Student {
     name: string;
     surname: string;
-    grades: { [k: string]: {}[] };
+    grades: grades;
     id: string;
-    constructor(
-        name: string,
-        surname: string,
-        grades: { [k: string]: {}[] },
-        id: string
-    ) {
+    constructor(name: string, surname: string, grades: grades, id: string) {
         this.name = name;
         this.surname = surname;
         this.grades = grades;

@@ -4,6 +4,9 @@ import styles from "./GradesInput.module.scss";
 import Student from "../../../models/Student";
 import StudentClass from "../../../models/StudentClass";
 import { useRef } from "react";
+import Grade from "../../../models/Grade";
+import grades from "../../../models/grades";
+import { useAppSelector } from "../../../hooks/use-app-selector";
 const GradesInput: React.FC<{
     studentDetails: Student;
     selectedSubject?: string;
@@ -13,10 +16,10 @@ const GradesInput: React.FC<{
     const { studentDetails } = props;
     const gradeRef = useRef<HTMLInputElement>(null);
     const weightRef = useRef<HTMLInputElement>(null);
+    const user = useAppSelector((state) => state.authentication.username);
     const onAddGradeHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const grades: { [k: string]: {}[] } = {};
-        console.log(studentDetails.grades);
+        const grades: grades = {};
         if (
             studentDetails.grades &&
             studentDetails.grades[`${props.selectedSubject}`]
@@ -30,6 +33,9 @@ const GradesInput: React.FC<{
                     grade: gradeRef.current!.value,
                     weight: weightRef.current!.value,
                     id: `gid${Date.now()}`,
+                    from: "",
+                    teacher: user!,
+                    subject: props.selectedSubject!,
                 },
             ];
         } else {
@@ -41,6 +47,9 @@ const GradesInput: React.FC<{
                     grade: gradeRef.current!.value,
                     weight: weightRef.current!.value,
                     id: `gid${Date.now()}`,
+                    from: "",
+                    teacher: user!,
+                    subject: props.selectedSubject!,
                 },
             ];
         }

@@ -3,6 +3,7 @@ import styles from "./StudentDetails.module.scss";
 import { Link } from "react-router-dom";
 import GradesInput from "../GradesInput/GradesInput";
 import StudentClass from "../../../models/StudentClass";
+import GradesList from "../GradesList/GradesList";
 const StudentDetails: React.FC<{
     studentDetails: Student;
     selectedSubject?: string;
@@ -21,6 +22,12 @@ const StudentDetails: React.FC<{
                         {props.studentDetails.surname}
                     </Link>
                 </div>
+                {props.selectedSubject && props.studentDetails.grades && (
+                    <GradesList
+                        selectedSubject={props.selectedSubject}
+                        grades={props.studentDetails.grades}
+                    />
+                )}
                 {props.selectedSubject && (
                     <GradesInput
                         setSelectedClass={props.setSelectedClass}
