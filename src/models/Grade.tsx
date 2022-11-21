@@ -20,7 +20,8 @@ class Grade {
         this.weight = weight;
         this.id = id;
         this.from = from;
-        (this.teacher = teacher), (this.subject = subject);
+        this.teacher = teacher;
+        this.subject = subject;
     }
     async save(config: {
         studentDetails: Student;

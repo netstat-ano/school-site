@@ -44,7 +44,7 @@ const Grades: React.FC<{}> = () => {
                 classesNames={classesNames}
                 onSelect={onSelectClassChangeHandler}
             />
-            {selectedClass && setSelectedClass && (
+            {selectedClass && (
                 <>
                     <SelectSubject
                         subjects={selectedClass.subjects}

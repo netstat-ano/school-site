@@ -5,11 +5,11 @@ const GradeElement: React.FC<{ children: string; gradeDetails: grade }> = (
     props
 ) => {
     return (
-        <span className={styles["grade-element"]}>
-            <Link to={`/grade-details/${props.gradeDetails.id}`}>
+        <li>
+            <Link to={`grade-details/${props.gradeDetails.id}`}>
                 {props.children}
             </Link>
-        </span>
+        </li>
     );
 };
 export default GradeElement;

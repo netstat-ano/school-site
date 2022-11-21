@@ -17,54 +17,25 @@ const GradesInput: React.FC<{
     const gradeRef = useRef<HTMLInputElement>(null);
     const weightRef = useRef<HTMLInputElement>(null);
     const user = useAppSelector((state) => state.authentication.username);
-    const onAddGradeHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    const onAddGradeHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const grades: grades = {};
-        if (
-            studentDetails.grades &&
-            studentDetails.grades[`${props.selectedSubject}`]
-        ) {
-            for (const key in studentDetails.grades) {
-                grades[`${key}`] = studentDetails.grades[`${key}`];
-            }
-            grades[`${props.selectedSubject}`] = [
-                ...studentDetails.grades[`${props.selectedSubject}`],
-                {
-                    grade: gradeRef.current!.value,
-                    weight: weightRef.current!.value,
-                    id: `gid${Date.now()}`,
-                    from: "",
-                    teacher: user!,
-                    subject: props.selectedSubject!,
-                },
-            ];
-        } else {
-            for (const key in studentDetails.grades) {
-                grades[`${key}`] = studentDetails.grades[`${key}`];
-            }
-            grades[`${props.selectedSubject}`] = [
-                {
-                    grade: gradeRef.current!.value,
-                    weight: weightRef.current!.value,
-                    id: `gid${Date.now()}`,
-                    from: "",
-                    teacher: user!,
-                    subject: props.selectedSubject!,
-                },
-            ];
-        }
-        const updatedStudent = new Student(
-            studentDetails.name,
-            studentDetails.surname,
-            grades,
-            studentDetails.id
-        );
+
         const indexOfUpdatedStudent = props.selectedClass!.students.findIndex(
             (student) => student.id === studentDetails.id
         );
-        const updatedStudents = [...props.selectedClass!.students];
-        updatedStudents[indexOfUpdatedStudent] = updatedStudent;
-        updatedStudent.save(props.selectedClass!.id, updatedStudents);
+        const grade = new Grade(
+            gradeRef.current!.value,
+            weightRef.current!.value,
+            `gid${Date.now()}`,
+            "",
+            user!,
+            props.selectedSubject!
+        );
+        const updatedStudent = await grade.save({
+            studentDetails: studentDetails,
+            selectedSubject: props.selectedSubject!,
+            selectedClass: props.selectedClass!,
+        });
         props.setSelectedClass((prevState: StudentClass) => {
             const students = [...prevState.students];
             students[indexOfUpdatedStudent] = updatedStudent;
