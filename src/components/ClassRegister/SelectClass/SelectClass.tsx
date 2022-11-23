@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const SelectClass: React.FC<{
     onInit: (classes: StudentClass[]) => void;
     onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    classesNames: StudentClass[] | undefined;
+    classes: StudentClass[] | undefined;
 }> = (props) => {
     useEffect(() => {
         const fetchClassesNames = async () => {
@@ -17,7 +17,7 @@ const SelectClass: React.FC<{
     };
     return (
         <select onChange={onSelectClassHandler}>
-            {props.classesNames?.map((studentClass) => {
+            {props.classes?.map((studentClass) => {
                 return (
                     <option value={`${studentClass.id}`}>
                         {studentClass.name}

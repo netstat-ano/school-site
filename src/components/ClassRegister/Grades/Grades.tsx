@@ -5,7 +5,7 @@ import SelectSubject from "../SelectSubject/SelectSubject";
 import StudentsList from "../StudentsList/StudentsList";
 const STUDENT_CLASS_TEMPLATE = new StudentClass([], "", "", "", []);
 const Grades: React.FC<{}> = () => {
-    const [classesNames, setClassesNames] = useState<StudentClass[]>();
+    const [classes, setClasses] = useState<StudentClass[]>();
     const [selectedClass, setSelectedClass] = useState<StudentClass>(
         STUDENT_CLASS_TEMPLATE
     );
@@ -18,13 +18,13 @@ const Grades: React.FC<{}> = () => {
         }
     }, [selectedClass.name]);
     const onInitHandler = (classes: StudentClass[]) => {
-        setClassesNames(classes);
+        setClasses(classes);
         setSelectedClass(classes[0]);
     };
     const onSelectClassChangeHandler = (
         e: React.ChangeEvent<HTMLSelectElement>
     ) => {
-        const selectedClassFromArr = classesNames!.find(
+        const selectedClassFromArr = classes!.find(
             (studentClass) => studentClass.id === e.target.value
         );
         if (selectedClassFromArr) {
@@ -41,7 +41,7 @@ const Grades: React.FC<{}> = () => {
         <div>
             <SelectClass
                 onInit={onInitHandler}
-                classesNames={classesNames}
+                classes={classes}
                 onSelect={onSelectClassChangeHandler}
             />
             {selectedClass && (
@@ -51,6 +51,8 @@ const Grades: React.FC<{}> = () => {
                         onSelect={onSelectSubjectChangeHandler}
                     />
                     <StudentsList
+                        classes={classes}
+                        setClasses={setClasses}
                         setSelectedClass={setSelectedClass}
                         selectedClass={selectedClass}
                         selectedSubject={selectedSubject}

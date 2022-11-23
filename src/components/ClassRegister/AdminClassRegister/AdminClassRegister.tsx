@@ -5,6 +5,8 @@ import AddClass from "../AddClass/AddClass";
 import CenterDiv from "../../UI/CenterDiv/CenterDiv";
 import Grades from "../Grades/Grades";
 import Subjects from "../Subjects/Subjects";
+import StudentDetails from "../StudentDetails/StudentDetails";
+import Overlay from "../../UI/Overlay/Overlay";
 const AdminClassRegister: React.FC<{}> = () => {
     const sidebarElements = [
         <Link to="grades">Grades</Link>,
@@ -16,12 +18,19 @@ const AdminClassRegister: React.FC<{}> = () => {
         <div>
             <Sidebar elements={sidebarElements} />
             <CenterDiv>
-                <Routes>
-                    <Route path="subjects" element={<Subjects />} />
-                    <Route path="grades" element={<Grades />} />
-                    <Route path="students" element={<Students />} />
-                    <Route path="add-class" element={<AddClass />} />
-                </Routes>
+                <Overlay>
+                    <Routes>
+                        <Route
+                            path="student/:studentId"
+                            element={<StudentDetails />}
+                        />
+                        <Route path="subjects" element={<Subjects />} />
+                        <Route path="subjects" element={<Subjects />} />
+                        <Route path="grades" element={<Grades />} />
+                        <Route path="students" element={<Students />} />
+                        <Route path="add-class" element={<AddClass />} />
+                    </Routes>
+                </Overlay>
             </CenterDiv>
         </div>
     );

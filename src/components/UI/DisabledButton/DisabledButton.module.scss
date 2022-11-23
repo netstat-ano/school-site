@@ -1,0 +1,8 @@
+@import "../../../scss/variables";
+.disabled-button {
+    background-color: $disabled-theme;
+    &:hover {
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+}

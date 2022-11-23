@@ -8,6 +8,10 @@ import Grade from "../../../models/Grade";
 import grades from "../../../models/grades";
 import { useAppSelector } from "../../../hooks/use-app-selector";
 const GradesInput: React.FC<{
+    classes?: StudentClass[] | undefined;
+    setClasses?: React.Dispatch<
+        React.SetStateAction<StudentClass[] | undefined>
+    >;
     studentDetails: Student;
     selectedSubject?: string;
     selectedClass?: StudentClass;
@@ -36,6 +40,20 @@ const GradesInput: React.FC<{
             selectedSubject: props.selectedSubject!,
             selectedClass: props.selectedClass!,
         });
+        if (props.setClasses) {
+            props.setClasses((prevState) => {
+                if (prevState) {
+                    const students = [...props.selectedClass!.students];
+                    students[indexOfUpdatedStudent] = updatedStudent;
+                    const indexOfUpdatedClass = prevState?.findIndex(
+                        (prevState) => prevState.id === props.selectedClass!.id
+                    );
+                    prevState[indexOfUpdatedClass].students = students;
+                    return [...prevState];
+                }
+                return [];
+            });
+        }
         props.setSelectedClass((prevState: StudentClass) => {
             const students = [...prevState.students];
             students[indexOfUpdatedStudent] = updatedStudent;

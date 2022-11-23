@@ -1,4 +1,13 @@
 .add-class {
-    margin-top: 5%;
     float: left;
+    font-size: 1.2rem;
+    button {
+        font-size: 1.2rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+.add-class__input {
+    margin: 0.5rem;
 }

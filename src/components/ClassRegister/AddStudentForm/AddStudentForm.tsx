@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import Student from "../../../models/Student";
+import Input from "../../UI/Input/Input";
+import styles from "./AddStudentForm.module.scss";
 const AddStudentForm: React.FC<{
     setAmountOfAddStudentForms: React.Dispatch<React.SetStateAction<number[]>>;
     setStudentsList: React.Dispatch<React.SetStateAction<Student[]>>;
@@ -55,17 +57,17 @@ const AddStudentForm: React.FC<{
         <>
             <div>
                 <label htmlFor="name">Imie</label>
-                <input
-                    onChange={onChangeHandler}
+                <Input
+                    className={styles["add-student__input"]}
+                    input={{ onChange: onChangeHandler, name: "name" }}
                     ref={nameRef}
-                    name="name"
-                ></input>
+                />
                 <label htmlFor="surname">Nazwisko</label>
-                <input
-                    onChange={onChangeHandler}
+                <Input
+                    className={styles["add-student__input"]}
+                    input={{ onChange: onChangeHandler, name: "surname" }}
                     ref={surnameRef}
-                    name="surname"
-                ></input>
+                />
             </div>
         </>
     );

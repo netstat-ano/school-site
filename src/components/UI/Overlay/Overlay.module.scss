@@ -1,0 +1,5 @@
+@import "../../../scss/variables";
+.overlay {
+    background-color: rgba($color: $gray-theme, $alpha: 0.8);
+    padding: 1rem;
+}
