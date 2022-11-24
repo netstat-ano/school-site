@@ -6,7 +6,7 @@ const GradeElement: React.FC<{ children: string; gradeDetails: grade }> = (
 ) => {
     return (
         <li>
-            <Link to={`grade-details/${props.gradeDetails.id}`}>
+            <Link to={`/class-register/grade-details/${props.gradeDetails.id}`}>
                 {props.children}
             </Link>
         </li>

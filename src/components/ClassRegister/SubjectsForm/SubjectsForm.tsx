@@ -2,35 +2,43 @@ import React, { useRef, useState } from "react";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
 import StudentClass from "../../../models/StudentClass";
+import DisabledButton from "../../UI/DisabledButton/DisabledButton";
 const SubjectsForm: React.FC<{
     selectedClass: StudentClass | undefined;
     setSubjectsList: React.Dispatch<React.SetStateAction<string[]>>;
     subjectsList: string[];
 }> = (props) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+    const [subjectName, setSubjectName] = useState("");
     const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        props.setSubjectsList((prevState) => [
-            ...prevState,
-            inputRef.current!.value,
-        ]);
+        props.setSubjectsList((prevState) => [...prevState, subjectName]);
         const updatedClass = new StudentClass(
             props.selectedClass!.students,
             props.selectedClass!.name,
             props.selectedClass!.mainTeacher,
             props.selectedClass!.id,
-            [...props.subjectsList, inputRef.current!.value]
+            [...props.subjectsList, subjectName]
         );
         await updatedClass.save();
-        inputRef.current!.value = "";
+        setSubjectName("");
+    };
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSubjectName(e.target.value);
     };
     return (
         <form onSubmit={onSubmitHandler}>
             <Input
-                ref={inputRef}
-                input={{ type: "text", placeholder: `Subject's name` }}
+                input={{
+                    type: "text",
+                    placeholder: `Subject's name`,
+                    onChange: onChangeHandler,
+                    value: subjectName,
+                }}
             />
-            <Button button={{ type: "submit" }}>Add subject</Button>
+            {subjectName && (
+                <Button button={{ type: "submit" }}>Add subject</Button>
+            )}
+            {!subjectName && <DisabledButton>Add subject</DisabledButton>}
         </form>
     );
 };

@@ -1,9 +1,12 @@
 @import "../../../scss/variables";
 .sidebar {
-    width: 10%;
+    width: 150px;
     margin-top: 5%;
     float: left;
     background-color: $gray-theme;
+    a {
+        color: black;
+    }
 }
 .sidebar__element {
     font-size: 1.3rem;
@@ -17,4 +20,9 @@
 }
 .sidebar__cb {
     clear: both;
+}
+@media screen and(max-width: 600px) {
+    .sidebar {
+        margin-top: 15%;
+    }
 }

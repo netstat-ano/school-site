@@ -7,6 +7,7 @@ import Grades from "../Grades/Grades";
 import Subjects from "../Subjects/Subjects";
 import StudentDetails from "../StudentDetails/StudentDetails";
 import Overlay from "../../UI/Overlay/Overlay";
+import GradeDetails from "../GradeDetails/GradeDetails";
 const AdminClassRegister: React.FC<{}> = () => {
     const sidebarElements = [
         <Link to="grades">Grades</Link>,
@@ -20,6 +21,10 @@ const AdminClassRegister: React.FC<{}> = () => {
             <CenterDiv>
                 <Overlay>
                     <Routes>
+                        <Route
+                            path="grade-details/:gradeId"
+                            element={<GradeDetails />}
+                        />
                         <Route
                             path="student/:studentId"
                             element={<StudentDetails />}

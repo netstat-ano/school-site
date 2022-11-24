@@ -3,10 +3,11 @@ import Input from "../../UI/Input/Input";
 import styles from "./GradesInput.module.scss";
 import Student from "../../../models/Student";
 import StudentClass from "../../../models/StudentClass";
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Grade from "../../../models/Grade";
 import grades from "../../../models/grades";
 import { useAppSelector } from "../../../hooks/use-app-selector";
+import DisabledButton from "../../UI/DisabledButton/DisabledButton";
 const GradesInput: React.FC<{
     classes?: StudentClass[] | undefined;
     setClasses?: React.Dispatch<
@@ -18,8 +19,9 @@ const GradesInput: React.FC<{
     setSelectedClass: React.Dispatch<React.SetStateAction<StudentClass>>;
 }> = (props) => {
     const { studentDetails } = props;
-    const gradeRef = useRef<HTMLInputElement>(null);
-    const weightRef = useRef<HTMLInputElement>(null);
+    const [description, setDescription] = useState("");
+    const [grade, setGrade] = useState("");
+    const [weight, setWeight] = useState("");
     const user = useAppSelector((state) => state.authentication.username);
     const onAddGradeHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -27,15 +29,15 @@ const GradesInput: React.FC<{
         const indexOfUpdatedStudent = props.selectedClass!.students.findIndex(
             (student) => student.id === studentDetails.id
         );
-        const grade = new Grade(
-            gradeRef.current!.value,
-            weightRef.current!.value,
+        const updatedGrade = new Grade(
+            grade,
+            weight,
             `gid${Date.now()}`,
-            "",
+            description || "",
             user!,
             props.selectedSubject!
         );
-        const updatedStudent = await grade.save({
+        const updatedStudent = await updatedGrade.save({
             studentDetails: studentDetails,
             selectedSubject: props.selectedSubject!,
             selectedClass: props.selectedClass!,
@@ -67,18 +69,53 @@ const GradesInput: React.FC<{
             return updatedStudentClass;
         });
     };
+    const onGradeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setGrade(e.target.value);
+    };
+    const onWeightChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setWeight(e.target.value);
+    };
+    const onDescriptionChangeGandler = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setDescription(e.target.value);
+    };
     return (
         <div className={styles["grades-input"]}>
             <form onSubmit={onAddGradeHandler}>
                 <Input
-                    ref={gradeRef}
-                    input={{ type: "number", min: "1", max: "6" }}
+                    input={{
+                        value: grade,
+                        type: "number",
+                        min: "1",
+                        max: "6",
+                        placeholder: "Ocena",
+                        onChange: onGradeChangeHandler,
+                    }}
                 />
                 <Input
-                    ref={weightRef}
-                    input={{ type: "number", min: "1", max: "6" }}
+                    input={{
+                        value: weight,
+                        onChange: onWeightChangeHandler,
+                        type: "number",
+                        min: "1",
+                        max: "6",
+                        placeholder: "Waga",
+                    }}
                 />
-                <Button button={{ type: "submit" }}>Add</Button>
+                <Input
+                    input={{
+                        value: description,
+                        type: "text",
+                        placeholder: "Za co",
+                        onChange: onDescriptionChangeGandler,
+                    }}
+                />
+                {grade && weight ? (
+                    <Button button={{ type: "submit" }}>Add</Button>
+                ) : (
+                    <DisabledButton>Add</DisabledButton>
+                )}
             </form>
         </div>
     );
