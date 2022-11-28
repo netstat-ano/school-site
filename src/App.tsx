@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import PostDetail from "./pages/PostDetail/PostDetail";
 import Layout from "./components/Layout/Layout";
-import ClassRegister from "./components/ClassRegister/ClassRegister";
+import ClassRegister from "./pages/ClassRegister/ClassRegister";
 function App() {
     const navigate = useNavigate();
     useEffect(() => {

@@ -55,5 +55,13 @@ class StudentClass {
         const classes = await get(ref(database, `/studentClasses`));
         return classes;
     }
+    static async getSubjects() {
+        const studentClasses = await StudentClass.getArrayStudentClasses();
+        const subjects = [];
+        for (const studentClass of studentClasses) {
+            subjects.push(...studentClass.subjects);
+        }
+        return subjects;
+    }
 }
 export default StudentClass;

@@ -8,12 +8,16 @@ import Subjects from "../Subjects/Subjects";
 import StudentDetails from "../StudentDetails/StudentDetails";
 import Overlay from "../../UI/Overlay/Overlay";
 import GradeDetails from "../GradeDetails/GradeDetails";
+import AddTeacher from "../AddTeacher/AddTeacher";
+import TeachersList from "../TeachersList/TeachersList";
 const AdminClassRegister: React.FC<{}> = () => {
     const sidebarElements = [
-        <Link to="grades">Grades</Link>,
-        <Link to="subjects">Subjects</Link>,
-        <Link to="students">Students</Link>,
-        <Link to="add-class">Add class</Link>,
+        <Link to="grades">Oceny</Link>,
+        <Link to="subjects">Przedmioty</Link>,
+        <Link to="students">Uczniowie</Link>,
+        <Link to="add-class">Dodaj klase</Link>,
+        <Link to="add-teacher">Dodaj nauczyciela</Link>,
+        <Link to="teachers-list">Nauczyciel-przedmiot</Link>,
     ];
     return (
         <div>
@@ -21,6 +25,11 @@ const AdminClassRegister: React.FC<{}> = () => {
             <CenterDiv>
                 <Overlay>
                     <Routes>
+                        <Route
+                            path="teachers-list"
+                            element={<TeachersList />}
+                        />
+                        <Route path="add-teacher" element={<AddTeacher />} />
                         <Route
                             path="grade-details/:gradeId"
                             element={<GradeDetails />}

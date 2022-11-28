@@ -2,7 +2,7 @@ import Student from "./Student";
 import grades from "./grades";
 import StudentClass from "./StudentClass";
 import grade from "./gradeold";
-import { get, ref } from "firebase/database";
+import { get, ref, update } from "firebase/database";
 import { database } from "../firebase";
 class Grade {
     grade: string;
@@ -64,6 +64,7 @@ class Grade {
         await updatedStudent.save(selectedClass!.id, updatedStudents);
         return updatedStudent;
     }
+
     static async getAllGrades() {
         const studentClassesSnapshot = await get(
             ref(database, `/studentClasses`)

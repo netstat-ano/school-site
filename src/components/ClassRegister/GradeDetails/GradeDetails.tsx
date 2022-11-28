@@ -4,7 +4,7 @@ import Grade from "../../../models/Grade";
 import styles from "./GradeDetails.module.scss";
 const GradeDetails: React.FC<{}> = () => {
     const params = useParams();
-    const [grade, setGrade] = useState<Grade>();
+    const [grade, setGrade] = useState<Grade | null>();
     useEffect(() => {
         const fetchGrades = async () => {
             const grade = await Grade.getGradeById(params.gradeId!);

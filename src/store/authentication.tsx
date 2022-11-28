@@ -39,6 +39,10 @@ export const authenticationLogin = (
                 type = responseData.type;
                 username = responseData.displayName;
             }
+        } else {
+            const snapshotData = await get(
+                ref(database, `/teachers/${snapshot.user.uid}`)
+            );
         }
 
         dispatch(

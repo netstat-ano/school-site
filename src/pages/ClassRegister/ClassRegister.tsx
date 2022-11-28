@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../hooks/use-app-selector";
-import AdminClassRegister from "./AdminClassRegister/AdminClassRegister";
+import AdminClassRegister from "../../components/ClassRegister/AdminClassRegister/AdminClassRegister";
 import styles from "./ClassRegister.module.scss";
 const ClassRegister: React.FC<{}> = () => {
     const user = useAppSelector((state) => state.authentication);
