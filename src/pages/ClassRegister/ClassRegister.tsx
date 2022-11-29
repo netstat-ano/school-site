@@ -3,7 +3,7 @@ import AdminClassRegister from "../../components/ClassRegister/AdminClassRegiste
 import styles from "./ClassRegister.module.scss";
 const ClassRegister: React.FC<{}> = () => {
     const user = useAppSelector((state) => state.authentication);
-    if (user.type === "Admin") {
+    if (user.type === "Admin" || user.type === "teacher") {
         return (
             <div className={styles["class-register"]}>
                 <AdminClassRegister />

@@ -19,10 +19,11 @@ class Teacher {
         this.name = name;
         this.password = password;
         this.subjects = subjects;
-        this.id = id || String(Date.now());
+        this.id = id || "";
     }
     async save() {
         await createUserWithEmailAndPassword(auth, this.email, this.password);
+        this.id = auth.currentUser!.uid;
         signOut(auth);
         const updates: { [k: string]: {} } = {};
         updates[`/teachers/${this.id}`] = this;
@@ -32,6 +33,16 @@ class Teacher {
         const updates: { [k: string]: {} } = {};
         updates[`/teachers/${this.id}`] = this;
         await update(ref(database), updates);
+    }
+    async getSubjects() {
+        const snapshot = await get(
+            ref(database, `/teachers/${this.id}/subjects`)
+        );
+        if (snapshot.exists()) {
+            const subjects: string[] = snapshot.val();
+            return subjects;
+        }
+        return [];
     }
     static async getAllTeachers() {
         const teachers = await get(ref(database, `/teachers`));

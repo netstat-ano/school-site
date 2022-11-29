@@ -5,13 +5,13 @@
     }
 }
 .nav-elements__nav-controller {
-    background-color: $gray-theme;
-    font-size: 1.6rem;
+    background: $gray-theme;
+    font-size: 1.3rem;
     padding-right: 0.5rem;
 }
 .nav-elements {
     display: flex;
     position: absolute;
     width: 100%;
-    background-color: $gray-theme;
+    background: $gray-theme;
 }

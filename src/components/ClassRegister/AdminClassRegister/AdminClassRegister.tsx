@@ -10,15 +10,25 @@ import Overlay from "../../UI/Overlay/Overlay";
 import GradeDetails from "../GradeDetails/GradeDetails";
 import AddTeacher from "../AddTeacher/AddTeacher";
 import TeachersList from "../TeachersList/TeachersList";
+import { useAppSelector } from "../../../hooks/use-app-selector";
 const AdminClassRegister: React.FC<{}> = () => {
-    const sidebarElements = [
-        <Link to="grades">Oceny</Link>,
-        <Link to="subjects">Przedmioty</Link>,
-        <Link to="students">Uczniowie</Link>,
-        <Link to="add-class">Dodaj klase</Link>,
-        <Link to="add-teacher">Dodaj nauczyciela</Link>,
-        <Link to="teachers-list">Nauczyciel-przedmiot</Link>,
-    ];
+    const userType = useAppSelector((state) => state.authentication.type!);
+    let sidebarElements = [<>Error</>];
+    if (userType === "Admin") {
+        sidebarElements = [
+            <Link to="grades">Oceny</Link>,
+            <Link to="subjects">Przedmioty</Link>,
+            <Link to="students">Uczniowie</Link>,
+            <Link to="add-class">Dodaj klase</Link>,
+            <Link to="add-teacher">Dodaj nauczyciela</Link>,
+            <Link to="teachers-list">Nauczyciel-przedmiot</Link>,
+        ];
+    } else if (userType === "teacher") {
+        sidebarElements = [
+            <Link to="grades">Oceny</Link>,
+            <Link to="subjects">Przedmioty</Link>,
+        ];
+    }
     return (
         <div>
             <Sidebar elements={sidebarElements} />

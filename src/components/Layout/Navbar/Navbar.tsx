@@ -18,21 +18,23 @@ const Navbar: React.FC<{}> = () => {
                         </span>
                     </Link>
                 </div>
-                <div className={styles["navbar__important"]}>
-                    <Link
-                        className={styles["navbar__important__link"]}
-                        to="/admin"
-                    >
-                        Admin
-                    </Link>
-                </div>
-                <div className={styles["navbar__important"]}>
-                    <Link
-                        className={styles["navbar__important__link"]}
-                        to="/class-register"
-                    >
-                        Dziennik
-                    </Link>
+                <div>
+                    <span className={styles["navbar__important"]}>
+                        <Link
+                            className={styles["navbar__important__link"]}
+                            to="/admin"
+                        >
+                            Admin
+                        </Link>
+                    </span>
+                    <span className={styles["navbar__important"]}>
+                        <Link
+                            className={styles["navbar__important__link"]}
+                            to="/class-register"
+                        >
+                            Dziennik
+                        </Link>
+                    </span>
                 </div>
             </div>
             <NavElements />

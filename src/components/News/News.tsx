@@ -19,11 +19,14 @@ const News: React.FC<{}> = () => {
         fetchNews();
     }, []);
     return (
-        <div className={styles["news-container"]}>
-            {newsPosts.map((post) => (
-                <NewsShortcut key={post.id} post={post} />
-            ))}
-        </div>
+        <>
+            <h1 className={styles["news-container__headline"]}>AKTUALNOŚCI</h1>
+            <div className={styles["news-container"]}>
+                {newsPosts.map((post) => (
+                    <NewsShortcut key={post.id} post={post} />
+                ))}
+            </div>
+        </>
     );
 };
 export default News;

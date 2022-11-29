@@ -46,17 +46,27 @@ const TeacherSubjectRelation: React.FC<{
             <div className={styles["teacher-subject-relation__name"]}>
                 {teacher.name}
             </div>
-            {subjects.map((subject) => (
-                <div>
-                    <label htmlFor={subject}>{subject}</label>
-                    <input
-                        value={subject}
-                        onChange={onChangeHandler}
-                        id={subject}
-                        type="checkbox"
-                    ></input>
-                </div>
-            ))}
+            <ol>
+                {subjects.map((subject) => (
+                    <li key={subject}>
+                        <label htmlFor={subject}>{subject}</label>
+                        <input
+                            defaultChecked={
+                                teacher.subjects &&
+                                teacher.subjects.find(
+                                    (value) => value === subject
+                                )
+                                    ? true
+                                    : false
+                            }
+                            value={subject}
+                            onChange={onChangeHandler}
+                            id={subject}
+                            type="checkbox"
+                        ></input>
+                    </li>
+                ))}
+            </ol>
         </div>
     );
 };
