@@ -3,5 +3,6 @@ interface user {
     email: string;
     uid: string;
     type?: string;
+    subjects?: string[];
 }
 export default user;

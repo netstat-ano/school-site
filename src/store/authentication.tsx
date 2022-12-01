@@ -32,6 +32,7 @@ export const authenticationLogin = (
             ref(database, `/user/${snapshot.user.uid}`)
         );
         const responseData = snapshotData.val();
+        let subjects = null;
         let type = "Admin";
         let username = "Admin";
         if (snapshotData.exists()) {
@@ -47,6 +48,7 @@ export const authenticationLogin = (
                 const data = snapshotData.val();
                 type = "teacher";
                 username = data.name;
+                subjects = data.subjects || null;
             }
         }
 
@@ -57,6 +59,7 @@ export const authenticationLogin = (
                     username,
                     email: snapshot.user.email!,
                     type: type,
+                    subjects: subjects,
                 },
             })
         );

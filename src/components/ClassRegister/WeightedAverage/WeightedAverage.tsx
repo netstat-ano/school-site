@@ -21,8 +21,6 @@ const WeightedAverage: React.FC<{
             }
             if (parsedGrades) {
                 for (const grade in parsedGrades) {
-                    console.log(parsedGrades[grade]);
-
                     sumGrades +=
                         Number(parsedGrades[grade].grade) *
                         Number(parsedGrades[grade].weight);
